@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MathsPoint — Collaborative Learning Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f5f0;
+    --surface: #ffffff;
+    --surface2: #f0ede6;
+    --border: #e0dbd2;
+    --text: #1a1814;
+    --muted: #6b6560;
+    --accent: #2d5a27;
+    --accent2: #4a8c42;
+    --gold: #b8860b;
+    --gold-bg: #fdf8e8;
+    --danger: #8b2020;
+    --danger-bg: #fdf0f0;
+    --info: #1a4a6b;
+    --info-bg: #eef4fa;
+    --radius: 8px;
+    --radius-lg: 14px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: 15px; }
+  h1,h2,h3 { font-family: 'Lora', serif; }
+
+  /* PAGES */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* NAV */
+  nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 58px; position: sticky; top: 0; z-index: 100; }
+  .nav-logo { font-family: 'Lora', serif; font-size: 1.15rem; color: var(--accent); font-weight: 600; }
+  .nav-links { display: flex; gap: 4px; }
+  .nav-btn { background: none; border: none; padding: 7px 14px; border-radius: var(--radius); cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--muted); transition: all .15s; }
+  .nav-btn:hover, .nav-btn.active { background: var(--surface2); color: var(--text); }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .pts-badge { background: var(--gold-bg); color: var(--gold); border: 1px solid #e8d080; border-radius: 20px; padding: 4px 14px; font-size: 13px; font-weight: 500; }
+
+  /* LANDING */
+  #landing { min-height: 100vh; display: flex; flex-direction: column; }
+  .landing-header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+  .landing-hero { flex: 1; display: flex; align-items: center; justify-content: center; padding: 4rem 2rem; }
+  .landing-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2.5rem; width: 100%; max-width: 420px; box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
+  .landing-card h1 { font-size: 1.6rem; margin-bottom: .3rem; }
+  .landing-card p { color: var(--muted); font-size: 14px; margin-bottom: 2rem; line-height: 1.6; }
+  .edu-strip { background: var(--info-bg); border: 1px solid #c5d8ea; border-radius: var(--radius); padding: .8rem 1rem; margin-bottom: 1.5rem; font-size: 13px; color: var(--info); line-height: 1.5; }
+  .form-group { margin-bottom: 1rem; }
+  .form-group label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 5px; }
+  .form-group input { width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: var(--radius); font-family: 'DM Sans', sans-serif; font-size: 14px; background: var(--bg); color: var(--text); outline: none; transition: border .15s; }
+  .form-group input:focus { border-color: var(--accent2); }
+  .btn { display: inline-block; padding: 9px 20px; border-radius: var(--radius); font-family: 'DM Sans', sans-serif; font-size: 14px; cursor: pointer; border: none; transition: all .15s; font-weight: 500; }
+  .btn-primary { background: var(--accent); color: #fff; width: 100%; text-align: center; }
+  .btn-primary:hover { background: var(--accent2); }
+  .btn-sm { padding: 6px 14px; font-size: 13px; }
+  .btn-outline { background: none; border: 1px solid var(--border); color: var(--text); }
+  .btn-outline:hover { background: var(--surface2); }
+  .btn-danger { background: var(--danger); color: #fff; }
+  .btn-danger:hover { background: #a03030; }
+  .btn-gold { background: var(--gold); color: #fff; }
+  .btn-gold:hover { background: #9a7009; }
+  .err { color: var(--danger); font-size: 13px; margin-top: 8px; }
+  .landing-footer { background: var(--surface2); border-top: 1px solid var(--border); padding: 1.5rem 2rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .landing-footer-block h3 { font-size: .85rem; font-weight: 500; color: var(--muted); margin-bottom: .4rem; text-transform: uppercase; letter-spacing: .05em; }
+  .landing-footer-block p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* LAYOUT */
+  .app-wrap { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+  .section-title { font-family: 'Lora', serif; font-size: 1.3rem; margin-bottom: 1.2rem; color: var(--text); }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; }
+  .card + .card { margin-top: 1rem; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+
+  /* HUB */
+  .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.2rem 1.4rem; }
+  .stat-label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: .3rem; }
+  .stat-val { font-size: 2rem; font-family: 'Lora', serif; color: var(--accent); font-weight: 600; }
+  .stat-sub { font-size: 12px; color: var(--muted); margin-top: .2rem; }
+
+  /* LEADERBOARD */
+  .lb-row { display: flex; align-items: center; padding: .8rem 1rem; border-bottom: 1px solid var(--border); gap: 1rem; transition: background .1s; }
+  .lb-row:last-child { border-bottom: none; }
+  .lb-row:hover { background: var(--surface2); }
+  .lb-rank { font-size: 1.1rem; font-family: 'Lora', serif; font-weight: 600; color: var(--muted); width: 28px; text-align: center; }
+  .lb-rank.gold { color: #b8860b; }
+  .lb-rank.silver { color: #888; }
+  .lb-rank.bronze { color: #8b5e3c; }
+  .lb-name { flex: 1; font-weight: 500; }
+  .lb-pts { font-weight: 600; color: var(--accent); }
+  .lb-badge { font-size: 11px; background: var(--gold-bg); color: var(--gold); border: 1px solid #e8d080; border-radius: 20px; padding: 2px 9px; margin-left: 6px; }
+
+  /* SHOP */
+  .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
+  .shop-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.2rem; display: flex; flex-direction: column; gap: .6rem; }
+  .shop-item-name { font-weight: 500; font-size: .95rem; }
+  .shop-item-desc { font-size: 13px; color: var(--muted); flex: 1; line-height: 1.5; }
+  .shop-item-price { font-size: 1.1rem; font-family: 'Lora', serif; color: var(--gold); font-weight: 600; }
+  .shop-item-owned { font-size: 12px; color: var(--accent); font-weight: 500; }
+
+  /* ARCADE */
+  .arcade-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
+  .game-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; display: flex; flex-direction: column; }
+  .game-thumb { height: 120px; background: var(--surface2); display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+  .game-info { padding: 1rem; flex: 1; display: flex; flex-direction: column; gap: .5rem; }
+  .game-name { font-weight: 600; font-size: .95rem; }
+  .game-cost { font-size: 12px; color: var(--muted); }
+  .game-cost span { color: var(--accent); font-weight: 600; }
+  .game-frame { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 999; background: #000; display: none; flex-direction: column; }
+  .game-frame.open { display: flex; }
+  .game-bar { background: #111; padding: .6rem 1rem; display: flex; align-items: center; justify-content: space-between; color: #fff; font-size: 13px; }
+  .game-bar-pts { color: #f0c040; font-weight: 600; }
+  .game-iframe { flex: 1; border: none; width: 100%; }
+
+  /* TRADE */
+  .trade-form { display: flex; flex-direction: column; gap: .8rem; max-width: 400px; }
+  .select-field { width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: var(--radius); font-family: 'DM Sans', sans-serif; font-size: 14px; background: var(--bg); color: var(--text); outline: none; }
+
+  /* ADMIN */
+  .admin-tabs { display: flex; gap: 4px; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+  .admin-tab { background: none; border: none; padding: 7px 16px; border-radius: var(--radius); cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--muted); }
+  .admin-tab.active { background: var(--accent); color: #fff; }
+  .admin-panel { display: none; }
+  .admin-panel.active { display: block; }
+  .user-row { display: flex; align-items: center; padding: .7rem 1rem; border-bottom: 1px solid var(--border); gap: 1rem; }
+  .user-row:last-child { border-bottom: none; }
+  .user-row-name { flex: 1; font-weight: 500; }
+  .user-row-pts { color: var(--accent); font-weight: 600; min-width: 80px; }
+  .tag { font-size: 11px; background: var(--info-bg); color: var(--info); border: 1px solid #c5d8ea; border-radius: 20px; padding: 2px 9px; }
+  .tag.admin { background: #f5eef8; color: #6a2080; border-color: #d4b0e8; }
+  .tag.upgrade { background: var(--gold-bg); color: var(--gold); border-color: #e8d080; }
+  .input-row { display: flex; gap: 8px; align-items: center; }
+  .input-sm { padding: 7px 10px; border: 1px solid var(--border); border-radius: var(--radius); font-family: 'DM Sans', sans-serif; font-size: 13px; background: var(--bg); color: var(--text); outline: none; }
+  .toast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--text); color: var(--bg); border-radius: var(--radius); padding: .75rem 1.2rem; font-size: 13px; z-index: 9999; opacity: 0; transform: translateY(8px); transition: all .25s; pointer-events: none; }
+  .toast.show { opacity: 1; transform: translateY(0); }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 1.2rem 0; }
+  .schedule-row { display: flex; align-items: center; gap: 8px; padding: .5rem 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+  .schedule-row:last-child { border-bottom: none; }
+  .schedule-day { width: 90px; font-weight: 500; }
+  .notice { background: var(--info-bg); border: 1px solid #c5d8ea; border-radius: var(--radius); padding: .8rem 1rem; font-size: 13px; color: var(--info); margin-bottom: 1rem; line-height: 1.6; }
+  .notice.warn { background: var(--gold-bg); border-color: #e8d080; color: #7a5c00; }
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- LANDING PAGE -->
+<div id="landing" class="page active">
+  <div class="landing-header">
+    <div style="font-family:'Lora',serif;font-size:1.1rem;color:var(--accent);font-weight:600;">📐 MathsPoint</div>
+    <div style="font-size:13px;color:var(--muted);">Collaborative Learning Platform</div>
+  </div>
+  <div class="landing-hero">
+    <div class="landing-card">
+      <h1>Welcome back</h1>
+      <p>Sign in to access your personalised maths practice hub and track your progress.</p>
+      <div class="edu-strip">📊 Track your problem-solving streaks, collect Maths Points, and collaborate with classmates on challenges.</div>
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" id="login-user" placeholder="Enter your username" autocomplete="username">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="login-pass" placeholder="Enter your password" autocomplete="current-password">
+      </div>
+      <div class="err" id="login-err"></div>
+      <button class="btn btn-primary" style="margin-top:.5rem" onclick="doLogin()">Sign in to MathsPoint</button>
+      <div style="text-align:center;margin-top:1rem;font-size:13px;color:var(--muted);">Don't have an account? <a href="#" style="color:var(--accent)" onclick="showRegister()">Register</a></div>
+    </div>
+  </div>
+  <div class="landing-footer">
+    <div class="landing-footer-block">
+      <h3>About</h3>
+      <p>MathsPoint is a peer-led maths revision platform designed for collaborative study and friendly competition.</p>
+    </div>
+    <div class="landing-footer-block">
+      <h3>Features</h3>
+      <p>Daily challenges, point tracking, progress leaderboards, and study session tools to keep you engaged.</p>
+    </div>
+    <div class="landing-footer-block">
+      <h3>Points System</h3>
+      <p>Earn Maths Points during study sessions. Points reflect your engagement and can be used to unlock bonus resources.</p>
+    </div>
+  </div>
+</div>
+
+<!-- REGISTER MODAL -->
+<div id="reg-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:500;display:none;align-items:center;justify-content:center;">
+  <div class="landing-card" style="max-width:380px;">
+    <h2 style="margin-bottom:.5rem;">Create account</h2>
+    <p style="margin-bottom:1.2rem;font-size:13px;">Accounts require admin approval before earning points.</p>
+    <div class="form-group"><label>Choose a username</label><input type="text" id="reg-user" placeholder="Username"></div>
+    <div class="form-group"><label>Password</label><input type="password" id="reg-pass" placeholder="Password"></div>
+    <div class="form-group"><label>Confirm password</label><input type="password" id="reg-pass2" placeholder="Confirm password"></div>
+    <div class="err" id="reg-err"></div>
+    <div style="display:flex;gap:.5rem;margin-top:.5rem;">
+      <button class="btn btn-outline btn-sm" onclick="hideRegister()" style="flex:1">Cancel</button>
+      <button class="btn btn-primary btn-sm" onclick="doRegister()" style="flex:1">Create account</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app" style="display:none;">
+  <nav>
+    <div class="nav-logo">📐 MathsPoint</div>
+    <div class="nav-links">
+      <button class="nav-btn active" onclick="showTab('hub',this)">Hub</button>
+      <button class="nav-btn" onclick="showTab('leaderboard',this)">Leaderboard</button>
+      <button class="nav-btn" onclick="showTab('arcade',this)">Practice Tools</button>
+      <button class="nav-btn" onclick="showTab('shop',this)">Resources</button>
+      <button class="nav-btn" onclick="showTab('trade',this)">Transfer</button>
+      <button class="nav-btn" id="admin-nav-btn" style="display:none" onclick="showTab('admin',this)">⚙ Admin</button>
+    </div>
+    <div class="nav-right">
+      <span class="pts-badge" id="nav-pts">0 pts</span>
+      <span style="font-size:14px;color:var(--muted)" id="nav-user"></span>
+      <button class="btn btn-outline btn-sm" onclick="doLogout()">Sign out</button>
+    </div>
+  </nav>
+
+  <!-- HUB TAB -->
+  <div id="tab-hub" class="tab-content">
+    <div class="app-wrap">
+      <div class="stat-row">
+        <div class="stat-card"><div class="stat-label">Your Maths Points</div><div class="stat-val" id="hub-pts">0</div><div class="stat-sub">Keep studying!</div></div>
+        <div class="stat-card"><div class="stat-label">Your Rank</div><div class="stat-val" id="hub-rank">#—</div><div class="stat-sub" id="hub-rank-sub">out of 0 students</div></div>
+        <div class="stat-card"><div class="stat-label">Points/minute</div><div class="stat-val" id="hub-rate">1</div><div class="stat-sub" id="hub-rate-sub">base rate</div></div>
+        <div class="stat-card"><div class="stat-label">Session status</div><div class="stat-val" id="hub-session" style="font-size:1.1rem;">—</div><div class="stat-sub" id="hub-session-sub">—</div></div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="section-title">Your profile</div>
+          <p style="font-size:14px;color:var(--muted);margin-bottom:1rem;">Logged in as <strong id="profile-name"></strong></p>
+          <div id="owned-upgrades" style="font-size:13px;color:var(--muted);">Loading upgrades…</div>
+          <hr class="divider">
+          <div style="font-size:13px;color:var(--muted);">Points are earned during scheduled study sessions. Check the schedule for active earning windows.</div>
+        </div>
+        <div class="card">
+          <div class="section-title">Today's schedule</div>
+          <div id="hub-schedule" style="font-size:14px;color:var(--muted);">No sessions scheduled today.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEADERBOARD TAB -->
+  <div id="tab-leaderboard" class="tab-content" style="display:none">
+    <div class="app-wrap">
+      <div class="section-title">Maths Points Leaderboard</div>
+      <div class="card" style="padding:0;overflow:hidden;" id="lb-list"></div>
+    </div>
+  </div>
+
+  <!-- ARCADE TAB -->
+  <div id="tab-arcade" class="tab-content" style="display:none">
+    <div class="app-wrap">
+      <div class="section-title">Practice Tools</div>
+      <div class="notice">🎓 These interactive tools help you practise maths skills. Points are spent per minute of use during active sessions.</div>
+      <div class="arcade-grid" id="arcade-grid"></div>
+      <div id="arcade-empty" style="display:none;color:var(--muted);font-size:14px;text-align:center;padding:3rem;">No practice tools available yet. Ask an admin to add some.</div>
+    </div>
+  </div>
+  <div class="game-frame" id="game-frame">
+    <div class="game-bar">
+      <span id="game-title-bar">Practice Tool</span>
+      <span>Cost: <span class="game-bar-pts" id="game-cost-bar">0</span> pts/min &nbsp;|&nbsp; Your points: <span class="game-bar-pts" id="game-pts-bar">0</span></span>
+      <button class="btn btn-danger btn-sm" onclick="closeGame()">✕ Exit</button>
+    </div>
+    <iframe class="game-iframe" id="game-iframe" src="about:blank" sandbox="allow-scripts allow-same-origin allow-forms allow-pointer-lock"></iframe>
+  </div>
+
+  <!-- SHOP TAB -->
+  <div id="tab-shop" class="tab-content" style="display:none">
+    <div class="app-wrap">
+      <div class="section-title">Resource Shop</div>
+      <div class="notice">Spend your Maths Points on resources, upgrades, and study bonuses.</div>
+      <div class="shop-grid" id="shop-grid"></div>
+      <div id="shop-empty" style="display:none;color:var(--muted);font-size:14px;text-align:center;padding:3rem;">No items in the shop yet. Check back later.</div>
+    </div>
+  </div>
+
+  <!-- TRADE TAB -->
+  <div id="tab-trade" class="tab-content" style="display:none">
+    <div class="app-wrap">
+      <div class="section-title">Transfer Points</div>
+      <div class="card" style="max-width:460px;">
+        <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Send Maths Points to a classmate. Great for group study rewards!</p>
+        <div class="trade-form">
+          <div class="form-group"><label>Send to</label>
+            <select class="select-field" id="trade-to"></select>
+          </div>
+          <div class="form-group"><label>Amount</label>
+            <input type="number" class="input-sm" id="trade-amt" placeholder="Points" min="1" style="width:100%;padding:9px 12px;">
+          </div>
+          <button class="btn btn-primary" onclick="doTrade()">Send Points</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN TAB -->
+  <div id="tab-admin" class="tab-content" style="display:none">
+    <div class="app-wrap">
+      <div class="section-title">Admin Panel</div>
+      <div class="admin-tabs">
+        <button class="admin-tab active" onclick="switchAdminTab('users',this)">Users</button>
+        <button class="admin-tab" onclick="switchAdminTab('schedule',this)">Schedule</button>
+        <button class="admin-tab" onclick="switchAdminTab('shop-admin',this)">Shop</button>
+        <button class="admin-tab" onclick="switchAdminTab('games-admin',this)">Practice Tools</button>
+      </div>
+
+      <!-- users panel -->
+      <div class="admin-panel active" id="ap-users">
+        <div class="card" style="margin-bottom:1rem;padding:1rem 1.2rem;">
+          <strong style="font-size:.9rem;">Pending approvals</strong>
+          <div id="pending-users" style="margin-top:.6rem;font-size:13px;color:var(--muted);">No pending registrations.</div>
+        </div>
+        <div class="card" style="padding:0;overflow:hidden;" id="admin-user-list"></div>
+      </div>
+
+      <!-- schedule panel -->
+      <div class="admin-panel" id="ap-schedule">
+        <div class="card" style="max-width:520px;">
+          <p style="font-size:14px;color:var(--muted);margin-bottom:1rem;">Set a daily earning window for each weekday. Students earn points every minute during the active window.</p>
+          <div id="schedule-editor"></div>
+          <hr class="divider">
+          <button class="btn btn-primary btn-sm" onclick="saveSchedule()">Save schedule</button>
+        </div>
+      </div>
+
+      <!-- shop admin panel -->
+      <div class="admin-panel" id="ap-shop-admin">
+        <div class="card" style="max-width:520px;margin-bottom:1rem;">
+          <strong style="font-size:.9rem;display:block;margin-bottom:.8rem;">Add shop item</strong>
+          <div class="form-group"><label>Item name</label><input class="input-sm" id="si-name" placeholder="e.g. Double Points Upgrade" style="width:100%;"></div>
+          <div class="form-group"><label>Description</label><input class="input-sm" id="si-desc" placeholder="What does this give?" style="width:100%;"></div>
+          <div class="form-group"><label>Cost (points)</label><input type="number" class="input-sm" id="si-cost" placeholder="50" style="width:100%;"></div>
+          <div class="form-group"><label>Type</label>
+            <select class="select-field" id="si-type">
+              <option value="double_points">Double Points (2pts/min)</option>
+              <option value="game_access">Permanent Game Access</option>
+              <option value="cosmetic">Cosmetic / Badge</option>
+            </select>
+          </div>
+          <div class="form-group" id="si-game-wrap" style="display:none;"><label>Game (for game access)</label><select class="select-field" id="si-game-id"></select></div>
+          <button class="btn btn-primary btn-sm" onclick="addShopItem()">Add item</button>
+        </div>
+        <div class="card" style="padding:0;overflow:hidden;max-width:520px;" id="admin-shop-list"></div>
+      </div>
+
+      <!-- games admin panel -->
+      <div class="admin-panel" id="ap-games-admin">
+        <div class="card" style="max-width:520px;margin-bottom:1rem;">
+          <strong style="font-size:.9rem;display:block;margin-bottom:.8rem;">Add practice tool</strong>
+          <div class="form-group"><label>Name</label><input class="input-sm" id="g-name" placeholder="e.g. 2048" style="width:100%;"></div>
+          <div class="form-group"><label>GitHub Pages / External URL</label><input class="input-sm" id="g-url" placeholder="https://..." style="width:100%;"></div>
+          <div class="form-group"><label>Emoji icon</label><input class="input-sm" id="g-icon" placeholder="🎮" style="width:80px;"></div>
+          <div class="form-group"><label>Cost per minute (pts)</label><input type="number" class="input-sm" id="g-cost" placeholder="1" style="width:100%;"></div>
+          <div class="form-group"><label>Requires purchase?</label>
+            <select class="select-field" id="g-gated">
+              <option value="0">Free (costs points per minute)</option>
+              <option value="1">Locked (must own shop item)</option>
+            </select>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="addGame()">Add tool</button>
+        </div>
+        <div class="card" style="padding:0;overflow:hidden;max-width:520px;" id="admin-games-list"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===================== STORAGE LAYER =====================
+// All data stored in localStorage under 'mpdata' key
+const STORE_KEY = 'mpdata_v2';
+
+function loadData() {
+  try { return JSON.parse(localStorage.getItem(STORE_KEY)) || defaultData(); }
+  catch { return defaultData(); }
+}
+function saveData(d) { localStorage.setItem(STORE_KEY, JSON.stringify(d)); }
+
+function defaultData() {
+  return {
+    users: [{
+      id: 'admin', username: 'admin', password: 'admin123',
+      isAdmin: true, approved: true, points: 0,
+      upgrades: [], joinedAt: Date.now()
+    }],
+    pending: [],
+    schedule: {
+      Mon: { enabled: false, start: '09:00', end: '10:00' },
+      Tue: { enabled: false, start: '09:00', end: '10:00' },
+      Wed: { enabled: false, start: '09:00', end: '10:00' },
+      Thu: { enabled: false, start: '09:00', end: '10:00' },
+      Fri: { enabled: false, start: '09:00', end: '10:00' },
+    },
+    shopItems: [],
+    games: [],
+  };
+}
+
+// ===================== STATE =====================
+let D = loadData();
+let currentUser = null;
+let gameInterval = null;
+let pointInterval = null;
+let activeGameId = null;
+
+// ===================== AUTH =====================
+function doLogin() {
+  const u = document.getElementById('login-user').value.trim();
+  const p = document.getElementById('login-pass').value;
+  const user = D.users.find(x => x.username === u && x.password === p);
+  if (!user) { document.getElementById('login-err').textContent = 'Incorrect username or password.'; return; }
+  if (!user.approved) { document.getElementById('login-err').textContent = 'Your account is awaiting admin approval.'; return; }
+  currentUser = user;
+  document.getElementById('login-err').textContent = '';
+  document.getElementById('landing').classList.remove('active');
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('nav-user').textContent = user.username;
+  document.getElementById('admin-nav-btn').style.display = user.isAdmin ? '' : 'none';
+  refreshAll();
+  startPointClock();
+}
+
+function showRegister() {
+  document.getElementById('reg-overlay').style.display = 'flex';
+}
+function hideRegister() {
+  document.getElementById('reg-overlay').style.display = 'none';
+}
+
+function doRegister() {
+  const u = document.getElementById('reg-user').value.trim();
+  const p = document.getElementById('reg-pass').value;
+  const p2 = document.getElementById('reg-pass2').value;
+  if (!u || !p) { document.getElementById('reg-err').textContent = 'Fill all fields.'; return; }
+  if (p !== p2) { document.getElementById('reg-err').textContent = 'Passwords do not match.'; return; }
+  D = loadData();
+  if (D.users.find(x => x.username === u) || (D.pending||[]).find(x=>x.username===u)) {
+    document.getElementById('reg-err').textContent = 'Username already taken.'; return;
+  }
+  if (!D.pending) D.pending = [];
+  D.pending.push({ id: 'u'+Date.now(), username: u, password: p, joinedAt: Date.now() });
+  saveData(D);
+  hideRegister();
+  toast('Registration submitted! An admin will approve your account.');
+}
+
+function doLogout() {
+  currentUser = null;
+  clearInterval(pointInterval);
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('landing').classList.add('active');
+  document.getElementById('login-pass').value = '';
+}
+
+// ===================== NAV =====================
+function showTab(name, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+name).style.display = 'block';
+  if(btn) btn.classList.add('active');
+  if(name==='leaderboard') renderLeaderboard();
+  if(name==='shop') renderShop();
+  if(name==='arcade') renderArcade();
+  if(name==='trade') renderTrade();
+  if(name==='admin') renderAdmin();
+}
+
+function switchAdminTab(name, btn) {
+  document.querySelectorAll('.admin-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.admin-tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('ap-'+name).classList.add('active');
+  btn.classList.add('active');
+  if(name==='shop-admin') renderAdminShop();
+  if(name==='games-admin') renderAdminGames();
+  if(name==='users') renderAdminUsers();
+}
+
+// ===================== POINT CLOCK =====================
+function isSessionActive() {
+  D = loadData();
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const now = new Date();
+  const dayName = days[now.getDay()];
+  const sched = D.schedule[dayName];
+  if (!sched || !sched.enabled) return false;
+  const [sh,sm] = sched.start.split(':').map(Number);
+  const [eh,em] = sched.end.split(':').map(Number);
+  const startMin = sh*60+sm, endMin = eh*60+em;
+  const nowMin = now.getHours()*60+now.getMinutes();
+  return nowMin >= startMin && nowMin < endMin;
+}
+
+function getUserRate(user) {
+  D = loadData();
+  const owned = user.upgrades || [];
+  const hasDouble = owned.some(id => {
+    const si = D.shopItems.find(i => i.id===id);
+    return si && si.type === 'double_points';
+  });
+  return hasDouble ? 2 : 1;
+}
+
+function startPointClock() {
+  clearInterval(pointInterval);
+  pointInterval = setInterval(() => {
+    D = loadData();
+    const u = D.users.find(x=>x.id===currentUser.id);
+    if (!u) return;
+    currentUser = u;
+    const active = isSessionActive();
+    if (active) {
+      const rate = getUserRate(u);
+      u.points = (u.points||0) + rate;
+      saveData(D);
+      currentUser = u;
+    }
+    updateNavPts();
+    updateHubStats();
+  }, 60000);
+  updateNavPts();
+  updateHubStats();
+}
+
+function updateNavPts() {
+  if(!currentUser) return;
+  D=loadData();
+  const u=D.users.find(x=>x.id===currentUser.id);
+  if(u) {
+    currentUser=u;
+    document.getElementById('nav-pts').textContent = u.points+' pts';
+  }
+}
+
+// ===================== HUB =====================
+function updateHubStats() {
+  if(!currentUser) return;
+  D=loadData();
+  const u=D.users.find(x=>x.id===currentUser.id);
+  if(!u) return;
+  document.getElementById('hub-pts').textContent = u.points;
+  document.getElementById('profile-name').textContent = u.username;
+  const sorted = D.users.filter(x=>x.approved).sort((a,b)=>b.points-a.points);
+  const rank = sorted.findIndex(x=>x.id===u.id)+1;
+  document.getElementById('hub-rank').textContent = '#'+rank;
+  document.getElementById('hub-rank-sub').textContent = 'out of '+sorted.length+' students';
+  const rate = getUserRate(u);
+  document.getElementById('hub-rate').textContent = rate;
+  document.getElementById('hub-rate-sub').textContent = rate>1?'upgraded rate':'base rate';
+  const active = isSessionActive();
+  document.getElementById('hub-session').textContent = active ? '🟢 Active' : '⚪ Inactive';
+  document.getElementById('hub-session-sub').textContent = active ? 'Earning '+rate+' pt/min' : 'No session now';
+  // Owned upgrades
+  const owned = u.upgrades||[];
+  const ownedEl = document.getElementById('owned-upgrades');
+  if(owned.length===0) { ownedEl.textContent='No upgrades yet. Visit the Resources shop!'; }
+  else {
+    ownedEl.innerHTML = '<strong style="font-size:.85rem;">Your upgrades:</strong><br>'+
+      owned.map(id=>{const si=D.shopItems.find(i=>i.id===id);return si?'✅ '+si.name:'?';}).join('<br>');
+  }
+  // Schedule today
+  const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const dayName=days[new Date().getDay()];
+  const sched=D.schedule[dayName];
+  const schedEl=document.getElementById('hub-schedule');
+  if(!sched||!sched.enabled) schedEl.innerHTML='<span style="color:var(--muted)">No earning session scheduled for today.</span>';
+  else schedEl.innerHTML='<strong>Today ('+dayName+'):</strong> '+sched.start+' – '+sched.end+
+    '<br><span style="font-size:13px;color:var(--muted)">Earn points every minute during this window.</span>';
+}
+
+function refreshAll() { updateHubStats(); }
+
+// ===================== LEADERBOARD =====================
+function renderLeaderboard() {
+  D=loadData();
+  const sorted = D.users.filter(x=>x.approved).sort((a,b)=>b.points-a.points);
+  const el = document.getElementById('lb-list');
+  if(!sorted.length){el.innerHTML='<div style="padding:2rem;text-align:center;color:var(--muted);font-size:14px;">No users yet.</div>';return;}
+  el.innerHTML = sorted.map((u,i)=>{
+    const rankClass = i===0?'gold':i===1?'silver':i===2?'bronze':'';
+    const medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
+    const adminTag = u.isAdmin?'<span class="tag admin">admin</span>':'';
+    const upgTag = (u.upgrades&&u.upgrades.length)?'<span class="lb-badge">⚡ upgraded</span>':'';
+    return `<div class="lb-row">
+      <div class="lb-rank ${rankClass}">${medal||('#'+(i+1))}</div>
+      <div class="lb-name">${u.username}${adminTag}</div>
+      ${upgTag}
+      <div class="lb-pts">${u.points} pts</div>
+    </div>`;
+  }).join('');
+}
+
+// ===================== SHOP =====================
+function renderShop() {
+  D=loadData();
+  const el=document.getElementById('shop-grid');
+  const empty=document.getElementById('shop-empty');
+  if(!D.shopItems||!D.shopItems.length){el.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+  const u=D.users.find(x=>x.id===currentUser.id);
+  el.innerHTML = D.shopItems.map(item=>{
+    const owned = (u.upgrades||[]).includes(item.id);
+    return `<div class="shop-item">
+      <div class="shop-item-name">${item.name}</div>
+      <div class="shop-item-desc">${item.desc}</div>
+      <div class="shop-item-price">⭐ ${item.cost} pts</div>
+      ${owned?`<div class="shop-item-owned">✅ Already owned</div>`:
+        `<button class="btn btn-gold btn-sm" onclick="buyItem('${item.id}')">Purchase</button>`}
+    </div>`;
+  }).join('');
+}
+
+function buyItem(id) {
+  D=loadData();
+  const u=D.users.find(x=>x.id===currentUser.id);
+  const item=D.shopItems.find(i=>i.id===id);
+  if(!u||!item) return;
+  if((u.upgrades||[]).includes(id)){toast('You already own this!');return;}
+  if(u.points<item.cost){toast('Not enough points! Need '+item.cost+', have '+u.points);return;}
+  u.points-=item.cost;
+  if(!u.upgrades) u.upgrades=[];
+  u.upgrades.push(id);
+  saveData(D);
+  currentUser=u;
+  toast('Purchased: '+item.name+'!');
+  renderShop();
+  updateNavPts();
+}
+
+// ===================== ARCADE =====================
+function renderArcade() {
+  D=loadData();
+  const el=document.getElementById('arcade-grid');
+  const empty=document.getElementById('arcade-empty');
+  if(!D.games||!D.games.length){el.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+  const u=D.users.find(x=>x.id===currentUser.id);
+  el.innerHTML = D.games.map(g=>{
+    let locked=false, lockReason='';
+    if(g.gated) {
+      const accessItem=D.shopItems.find(i=>i.type==='game_access'&&i.gameId===g.id);
+      if(accessItem&&!(u.upgrades||[]).includes(accessItem.id)) {
+        locked=true; lockReason='Purchase "'+accessItem.name+'" in Resources to unlock.';
+      }
+    }
+    return `<div class="game-card">
+      <div class="game-thumb">${g.icon||'🎮'}</div>
+      <div class="game-info">
+        <div class="game-name">${g.name}</div>
+        <div class="game-cost">Cost: <span>${g.cost} pts/min</span></div>
+        ${locked?`<div class="game-cost" style="color:var(--danger)">${lockReason}</div>
+          <button class="btn btn-outline btn-sm" style="margin-top:auto" disabled>🔒 Locked</button>`:
+          `<button class="btn btn-primary btn-sm" style="margin-top:auto" onclick="openGame('${g.id}')">▶ Launch</button>`}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openGame(id) {
+  D=loadData();
+  const g=D.games.find(x=>x.id===id);
+  const u=D.users.find(x=>x.id===currentUser.id);
+  if(!g||!u) return;
+  activeGameId=id;
+  document.getElementById('game-title-bar').textContent=g.name;
+  document.getElementById('game-cost-bar').textContent=g.cost;
+  document.getElementById('game-pts-bar').textContent=u.points;
+  document.getElementById('game-iframe').src=g.url;
+  document.getElementById('game-frame').classList.add('open');
+  gameInterval=setInterval(()=>{
+    D=loadData();
+    const uu=D.users.find(x=>x.id===currentUser.id);
+    if(!uu){closeGame();return;}
+    if(uu.points<g.cost){closeGame();toast('Not enough points!');return;}
+    uu.points-=g.cost;
+    saveData(D);
+    currentUser=uu;
+    document.getElementById('game-pts-bar').textContent=uu.points;
+    updateNavPts();
+  },60000);
+}
+
+function closeGame() {
+  clearInterval(gameInterval);
+  gameInterval=null;
+  activeGameId=null;
+  document.getElementById('game-frame').classList.remove('open');
+  document.getElementById('game-iframe').src='about:blank';
+  updateNavPts();
+}
+
+// ===================== TRADE =====================
+function renderTrade() {
+  D=loadData();
+  const sel=document.getElementById('trade-to');
+  const others=D.users.filter(x=>x.approved&&x.id!==currentUser.id);
+  sel.innerHTML=others.map(u=>`<option value="${u.id}">${u.username}</option>`).join('');
+}
+
+function doTrade() {
+  D=loadData();
+  const toId=document.getElementById('trade-to').value;
+  const amt=parseInt(document.getElementById('trade-amt').value);
+  if(!amt||amt<1){toast('Enter a valid amount.');return;}
+  const sender=D.users.find(x=>x.id===currentUser.id);
+  const receiver=D.users.find(x=>x.id===toId);
+  if(!sender||!receiver){toast('User not found.');return;}
+  if(sender.points<amt){toast('Not enough points!');return;}
+  sender.points-=amt;
+  receiver.points=(receiver.points||0)+amt;
+  saveData(D);
+  currentUser=sender;
+  toast('Sent '+amt+' pts to '+receiver.username+'!');
+  document.getElementById('trade-amt').value='';
+  updateNavPts();
+}
+
+// ===================== ADMIN =====================
+function renderAdmin() {
+  renderAdminUsers();
+  renderScheduleEditor();
+}
+
+function renderAdminUsers() {
+  D=loadData();
+  // pending
+  const pending=D.pending||[];
+  const pendEl=document.getElementById('pending-users');
+  if(!pending.length){pendEl.innerHTML='<span style="color:var(--muted)">No pending registrations.</span>';}
+  else {
+    pendEl.innerHTML=pending.map(p=>`<div style="display:flex;align-items:center;gap:.5rem;padding:.3rem 0;">
+      <span style="flex:1;font-weight:500;">${p.username}</span>
+      <button class="btn btn-primary btn-sm" onclick="approveUser('${p.id}')">Approve</button>
+      <button class="btn btn-danger btn-sm" onclick="rejectUser('${p.id}')">Reject</button>
+    </div>`).join('');
+  }
+  // all users
+  const el=document.getElementById('admin-user-list');
+  el.innerHTML=D.users.map(u=>`<div class="user-row">
+    <div class="user-row-name">${u.username} ${u.isAdmin?'<span class="tag admin">admin</span>':''}</div>
+    <div class="user-row-pts">${u.points} pts</div>
+    <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+      <input type="number" class="input-sm" id="pts-${u.id}" placeholder="±pts" style="width:70px;">
+      <button class="btn btn-primary btn-sm" onclick="adjustPts('${u.id}',1)">+</button>
+      <button class="btn btn-outline btn-sm" onclick="adjustPts('${u.id}',-1)">−</button>
+      ${!u.isAdmin?`<button class="btn btn-danger btn-sm" onclick="deleteUser('${u.id}')">Delete</button>`:''}
+    </div>
+  </div>`).join('');
+}
+
+function approveUser(id) {
+  D=loadData();
+  const p=D.pending.find(x=>x.id===id);
+  if(!p) return;
+  D.pending=D.pending.filter(x=>x.id!==id);
+  D.users.push({id:p.id,username:p.username,password:p.password,isAdmin:false,approved:true,points:0,upgrades:[],joinedAt:p.joinedAt});
+  saveData(D);
+  renderAdminUsers();
+  toast('Approved: '+p.username);
+}
+function rejectUser(id) {
+  D=loadData();
+  const p=D.pending.find(x=>x.id===id);
+  D.pending=D.pending.filter(x=>x.id!==id);
+  saveData(D);
+  renderAdminUsers();
+  toast('Rejected: '+(p?p.username:'user'));
+}
+function adjustPts(uid,sign) {
+  D=loadData();
+  const u=D.users.find(x=>x.id===uid);
+  const inputEl=document.getElementById('pts-'+uid);
+  const amt=parseInt(inputEl.value);
+  if(!amt||amt<0){toast('Enter a valid amount.');return;}
+  u.points=Math.max(0,(u.points||0)+sign*amt);
+  saveData(D);
+  if(currentUser&&currentUser.id===uid) currentUser=u;
+  toast((sign>0?'+':'-')+amt+' pts for '+u.username);
+  renderAdminUsers();
+  updateNavPts();
+}
+function deleteUser(id) {
+  if(!confirm('Delete this user?')) return;
+  D=loadData();
+  D.users=D.users.filter(x=>x.id!==id);
+  saveData(D);
+  renderAdminUsers();
+  toast('User deleted.');
+}
+
+// ===================== SCHEDULE =====================
+const DAYS=['Mon','Tue','Wed','Thu','Fri'];
+function renderScheduleEditor() {
+  D=loadData();
+  const el=document.getElementById('schedule-editor');
+  el.innerHTML=DAYS.map(day=>{
+    const s=D.schedule[day]||{enabled:false,start:'09:00',end:'10:00'};
+    return `<div class="schedule-row">
+      <div class="schedule-day">${day}</div>
+      <input type="checkbox" id="sched-en-${day}" ${s.enabled?'checked':''} onchange="schedToggle('${day}')">
+      <label for="sched-en-${day}" style="font-size:13px;color:var(--muted)">Active</label>
+      <input type="time" class="input-sm" id="sched-s-${day}" value="${s.start}" style="width:100px;">
+      <span style="color:var(--muted);font-size:13px;">to</span>
+      <input type="time" class="input-sm" id="sched-e-${day}" value="${s.end}" style="width:100px;">
+    </div>`;
+  }).join('');
+}
+function schedToggle(){}
+function saveSchedule() {
+  D=loadData();
+  DAYS.forEach(day=>{
+    D.schedule[day]={
+      enabled:document.getElementById('sched-en-'+day).checked,
+      start:document.getElementById('sched-s-'+day).value,
+      end:document.getElementById('sched-e-'+day).value
+    };
+  });
+  saveData(D);
+  toast('Schedule saved!');
+}
+
+// ===================== SHOP ADMIN =====================
+document.getElementById('si-type').addEventListener('change',function(){
+  document.getElementById('si-game-wrap').style.display=this.value==='game_access'?'block':'none';
+  if(this.value==='game_access') {
+    D=loadData();
+    const sel=document.getElementById('si-game-id');
+    sel.innerHTML=D.games.map(g=>`<option value="${g.id}">${g.name}</option>`).join('');
+  }
+});
+
+function renderAdminShop() {
+  D=loadData();
+  const el=document.getElementById('admin-shop-list');
+  if(!D.shopItems||!D.shopItems.length){el.innerHTML='<div style="padding:1.2rem;color:var(--muted);font-size:14px;">No items yet.</div>';return;}
+  el.innerHTML=D.shopItems.map(item=>`<div class="user-row">
+    <div style="flex:1;">
+      <div style="font-weight:500;">${item.name}</div>
+      <div style="font-size:12px;color:var(--muted);">${item.desc} • ${item.cost} pts • ${item.type}</div>
+    </div>
+    <button class="btn btn-danger btn-sm" onclick="deleteShopItem('${item.id}')">Delete</button>
+  </div>`).join('');
+}
+
+function addShopItem() {
+  const name=document.getElementById('si-name').value.trim();
+  const desc=document.getElementById('si-desc').value.trim();
+  const cost=parseInt(document.getElementById('si-cost').value);
+  const type=document.getElementById('si-type').value;
+  if(!name||!desc||!cost){toast('Fill all fields.');return;}
+  D=loadData();
+  const item={id:'si'+Date.now(),name,desc,cost,type};
+  if(type==='game_access') item.gameId=document.getElementById('si-game-id').value;
+  if(!D.shopItems) D.shopItems=[];
+  D.shopItems.push(item);
+  saveData(D);
+  document.getElementById('si-name').value='';
+  document.getElementById('si-desc').value='';
+  document.getElementById('si-cost').value='';
+  renderAdminShop();
+  toast('Shop item added!');
+}
+function deleteShopItem(id) {
+  D=loadData();
+  D.shopItems=D.shopItems.filter(x=>x.id!==id);
+  saveData(D);
+  renderAdminShop();
+  toast('Item removed.');
+}
+
+// ===================== GAMES ADMIN =====================
+function renderAdminGames() {
+  D=loadData();
+  const el=document.getElementById('admin-games-list');
+  if(!D.games||!D.games.length){el.innerHTML='<div style="padding:1.2rem;color:var(--muted);font-size:14px;">No tools yet.</div>';return;}
+  el.innerHTML=D.games.map(g=>`<div class="user-row">
+    <div class="game-thumb" style="height:40px;width:40px;font-size:1.5rem;border-radius:6px;background:var(--surface2);display:flex;align-items:center;justify-content:center;">${g.icon||'🎮'}</div>
+    <div style="flex:1;">
+      <div style="font-weight:500;">${g.name}</div>
+      <div style="font-size:12px;color:var(--muted);">${g.cost} pts/min ${g.gated?'• 🔒 gated':''}</div>
+    </div>
+    <button class="btn btn-danger btn-sm" onclick="deleteGame('${g.id}')">Delete</button>
+  </div>`).join('');
+}
+
+function addGame() {
+  const name=document.getElementById('g-name').value.trim();
+  const url=document.getElementById('g-url').value.trim();
+  const icon=document.getElementById('g-icon').value.trim()||'🎮';
+  const cost=parseInt(document.getElementById('g-cost').value)||1;
+  const gated=document.getElementById('g-gated').value==='1';
+  if(!name||!url){toast('Fill name and URL.');return;}
+  D=loadData();
+  if(!D.games) D.games=[];
+  D.games.push({id:'g'+Date.now(),name,url,icon,cost,gated});
+  saveData(D);
+  document.getElementById('g-name').value='';
+  document.getElementById('g-url').value='';
+  document.getElementById('g-icon').value='';
+  document.getElementById('g-cost').value='';
+  renderAdminGames();
+  toast('Practice tool added!');
+}
+function deleteGame(id) {
+  D=loadData();
+  D.games=D.games.filter(x=>x.id!==id);
+  saveData(D);
+  renderAdminGames();
+  toast('Tool removed.');
+}
+
+// ===================== TOAST =====================
+let toastTimer;
+function toast(msg) {
+  const el=document.getElementById('toast');
+  el.textContent=msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>el.classList.remove('show'),2800);
+}
+</script>
+</body>
+</html>
