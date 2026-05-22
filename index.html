@@ -7,143 +7,127 @@
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f7f5f0;
-    --surface: #ffffff;
-    --surface2: #f0ede6;
-    --border: #e0dbd2;
-    --text: #1a1814;
-    --muted: #6b6560;
-    --accent: #2d5a27;
-    --accent2: #4a8c42;
-    --gold: #b8860b;
-    --gold-bg: #fdf8e8;
-    --danger: #8b2020;
-    --danger-bg: #fdf0f0;
-    --info: #1a4a6b;
-    --info-bg: #eef4fa;
-    --radius: 8px;
-    --radius-lg: 14px;
+    --bg:#f7f5f0;--surface:#fff;--surface2:#f0ede6;--border:#e0dbd2;
+    --text:#1a1814;--muted:#6b6560;--accent:#2d5a27;--accent2:#4a8c42;
+    --gold:#b8860b;--gold-bg:#fdf8e8;--danger:#8b2020;--danger-bg:#fdf0f0;
+    --info:#1a4a6b;--info-bg:#eef4fa;--radius:8px;--radius-lg:14px;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: 15px; }
-  h1,h2,h3 { font-family: 'Lora', serif; }
-
-  /* PAGES */
-  .page { display: none; }
-  .page.active { display: block; }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;}
+  h1,h2,h3{font-family:'Lora',serif;}
+  .page{display:none;} .page.active{display:block;}
 
   /* NAV */
-  nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 58px; position: sticky; top: 0; z-index: 100; }
-  .nav-logo { font-family: 'Lora', serif; font-size: 1.15rem; color: var(--accent); font-weight: 600; }
-  .nav-links { display: flex; gap: 4px; }
-  .nav-btn { background: none; border: none; padding: 7px 14px; border-radius: var(--radius); cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--muted); transition: all .15s; }
-  .nav-btn:hover, .nav-btn.active { background: var(--surface2); color: var(--text); }
-  .nav-right { display: flex; align-items: center; gap: 12px; }
-  .pts-badge { background: var(--gold-bg); color: var(--gold); border: 1px solid #e8d080; border-radius: 20px; padding: 4px 14px; font-size: 13px; font-weight: 500; }
+  nav{background:var(--surface);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100;}
+  .nav-logo{font-family:'Lora',serif;font-size:1.1rem;color:var(--accent);font-weight:600;}
+  .nav-links{display:flex;gap:2px;}
+  .nav-btn{background:none;border:none;padding:6px 13px;border-radius:var(--radius);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--muted);transition:all .15s;}
+  .nav-btn:hover,.nav-btn.active{background:var(--surface2);color:var(--text);}
+  .nav-right{display:flex;align-items:center;gap:10px;}
+  .pts-badge{background:var(--gold-bg);color:var(--gold);border:1px solid #e8d080;border-radius:20px;padding:4px 13px;font-size:13px;font-weight:500;}
+
+  /* FORMS / BUTTONS */
+  .btn{display:inline-block;padding:9px 18px;border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;border:none;transition:all .15s;font-weight:500;}
+  .btn-primary{background:var(--accent);color:#fff;}  .btn-primary:hover{background:var(--accent2);}
+  .btn-sm{padding:6px 13px;font-size:13px;}
+  .btn-outline{background:none;border:1px solid var(--border);color:var(--text);}  .btn-outline:hover{background:var(--surface2);}
+  .btn-danger{background:var(--danger);color:#fff;}  .btn-danger:hover{opacity:.85;}
+  .btn-gold{background:var(--gold);color:#fff;}  .btn-gold:hover{opacity:.85;}
+  .btn:disabled{opacity:.45;cursor:not-allowed;}
+  .form-group{margin-bottom:.9rem;}
+  .form-group label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px;}
+  input[type=text],input[type=password],input[type=number],input[type=time],input[type=email],select,.input-field{width:100%;padding:9px 11px;border:1px solid var(--border);border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:14px;background:var(--bg);color:var(--text);outline:none;transition:border .15s;}
+  input:focus,select:focus{border-color:var(--accent2);}
+  .err{color:var(--danger);font-size:13px;margin-top:6px;}
+  .notice{background:var(--info-bg);border:1px solid #c5d8ea;border-radius:var(--radius);padding:.75rem 1rem;font-size:13px;color:var(--info);margin-bottom:1rem;line-height:1.6;}
+  .notice.warn{background:var(--gold-bg);border-color:#e8d080;color:#7a5c00;}
+  .notice.danger{background:var(--danger-bg);border-color:#e8c0c0;color:var(--danger);}
+  .divider{border:none;border-top:1px solid var(--border);margin:1.1rem 0;}
 
   /* LANDING */
-  #landing { min-height: 100vh; display: flex; flex-direction: column; }
-  .landing-header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; }
-  .landing-hero { flex: 1; display: flex; align-items: center; justify-content: center; padding: 4rem 2rem; }
-  .landing-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2.5rem; width: 100%; max-width: 420px; box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
-  .landing-card h1 { font-size: 1.6rem; margin-bottom: .3rem; }
-  .landing-card p { color: var(--muted); font-size: 14px; margin-bottom: 2rem; line-height: 1.6; }
-  .edu-strip { background: var(--info-bg); border: 1px solid #c5d8ea; border-radius: var(--radius); padding: .8rem 1rem; margin-bottom: 1.5rem; font-size: 13px; color: var(--info); line-height: 1.5; }
-  .form-group { margin-bottom: 1rem; }
-  .form-group label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 5px; }
-  .form-group input { width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: var(--radius); font-family: 'DM Sans', sans-serif; font-size: 14px; background: var(--bg); color: var(--text); outline: none; transition: border .15s; }
-  .form-group input:focus { border-color: var(--accent2); }
-  .btn { display: inline-block; padding: 9px 20px; border-radius: var(--radius); font-family: 'DM Sans', sans-serif; font-size: 14px; cursor: pointer; border: none; transition: all .15s; font-weight: 500; }
-  .btn-primary { background: var(--accent); color: #fff; width: 100%; text-align: center; }
-  .btn-primary:hover { background: var(--accent2); }
-  .btn-sm { padding: 6px 14px; font-size: 13px; }
-  .btn-outline { background: none; border: 1px solid var(--border); color: var(--text); }
-  .btn-outline:hover { background: var(--surface2); }
-  .btn-danger { background: var(--danger); color: #fff; }
-  .btn-danger:hover { background: #a03030; }
-  .btn-gold { background: var(--gold); color: #fff; }
-  .btn-gold:hover { background: #9a7009; }
-  .err { color: var(--danger); font-size: 13px; margin-top: 8px; }
-  .landing-footer { background: var(--surface2); border-top: 1px solid var(--border); padding: 1.5rem 2rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-  .landing-footer-block h3 { font-size: .85rem; font-weight: 500; color: var(--muted); margin-bottom: .4rem; text-transform: uppercase; letter-spacing: .05em; }
-  .landing-footer-block p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  #landing{min-height:100vh;display:flex;flex-direction:column;}
+  .landing-header{background:var(--surface);border-bottom:1px solid var(--border);padding:.9rem 2rem;display:flex;align-items:center;justify-content:space-between;}
+  .landing-hero{flex:1;display:flex;align-items:center;justify-content:center;padding:3rem 1.5rem;}
+  .landing-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2.2rem;width:100%;max-width:410px;box-shadow:0 4px 24px rgba(0,0,0,.07);}
+  .landing-card h1{font-size:1.55rem;margin-bottom:.3rem;}
+  .landing-card>p{color:var(--muted);font-size:14px;margin-bottom:1.5rem;line-height:1.6;}
+  .edu-strip{background:var(--info-bg);border:1px solid #c5d8ea;border-radius:var(--radius);padding:.75rem 1rem;margin-bottom:1.3rem;font-size:13px;color:var(--info);line-height:1.5;}
+  .landing-footer{background:var(--surface2);border-top:1px solid var(--border);padding:1.5rem 2rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+  .landing-footer h3{font-size:.8rem;font-weight:500;color:var(--muted);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.06em;}
+  .landing-footer p{font-size:13px;color:var(--muted);line-height:1.6;}
 
   /* LAYOUT */
-  .app-wrap { max-width: 1100px; margin: 0 auto; padding: 2rem; }
-  .section-title { font-family: 'Lora', serif; font-size: 1.3rem; margin-bottom: 1.2rem; color: var(--text); }
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; }
-  .card + .card { margin-top: 1rem; }
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .app-wrap{max-width:1080px;margin:0 auto;padding:1.8rem 1.5rem;}
+  .section-title{font-family:'Lora',serif;font-size:1.25rem;margin-bottom:1.1rem;}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.4rem;}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
 
-  /* HUB */
-  .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
-  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.2rem 1.4rem; }
-  .stat-label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: .3rem; }
-  .stat-val { font-size: 2rem; font-family: 'Lora', serif; color: var(--accent); font-weight: 600; }
-  .stat-sub { font-size: 12px; color: var(--muted); margin-top: .2rem; }
+  /* HUB STATS */
+  .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.8rem;}
+  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.1rem 1.3rem;}
+  .stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.3rem;}
+  .stat-val{font-size:1.85rem;font-family:'Lora',serif;color:var(--accent);font-weight:600;}
+  .stat-sub{font-size:12px;color:var(--muted);margin-top:.15rem;}
 
   /* LEADERBOARD */
-  .lb-row { display: flex; align-items: center; padding: .8rem 1rem; border-bottom: 1px solid var(--border); gap: 1rem; transition: background .1s; }
-  .lb-row:last-child { border-bottom: none; }
-  .lb-row:hover { background: var(--surface2); }
-  .lb-rank { font-size: 1.1rem; font-family: 'Lora', serif; font-weight: 600; color: var(--muted); width: 28px; text-align: center; }
-  .lb-rank.gold { color: #b8860b; }
-  .lb-rank.silver { color: #888; }
-  .lb-rank.bronze { color: #8b5e3c; }
-  .lb-name { flex: 1; font-weight: 500; }
-  .lb-pts { font-weight: 600; color: var(--accent); }
-  .lb-badge { font-size: 11px; background: var(--gold-bg); color: var(--gold); border: 1px solid #e8d080; border-radius: 20px; padding: 2px 9px; margin-left: 6px; }
+  .lb-row{display:flex;align-items:center;padding:.75rem 1rem;border-bottom:1px solid var(--border);gap:.9rem;}
+  .lb-row:last-child{border-bottom:none;}  .lb-row:hover{background:var(--surface2);}
+  .lb-rank{font-size:1rem;font-family:'Lora',serif;font-weight:600;color:var(--muted);width:26px;text-align:center;}
+  .lb-rank.gold{color:#b8860b;} .lb-rank.silver{color:#888;} .lb-rank.bronze{color:#8b5e3c;}
+  .lb-name{flex:1;font-weight:500;}
+  .lb-pts{font-weight:600;color:var(--accent);}
+  .tag{font-size:11px;border-radius:20px;padding:2px 8px;margin-left:4px;}
+  .tag-admin{background:#f5eef8;color:#6a2080;border:1px solid #d4b0e8;}
+  .tag-upg{background:var(--gold-bg);color:var(--gold);border:1px solid #e8d080;}
 
   /* SHOP */
-  .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
-  .shop-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.2rem; display: flex; flex-direction: column; gap: .6rem; }
-  .shop-item-name { font-weight: 500; font-size: .95rem; }
-  .shop-item-desc { font-size: 13px; color: var(--muted); flex: 1; line-height: 1.5; }
-  .shop-item-price { font-size: 1.1rem; font-family: 'Lora', serif; color: var(--gold); font-weight: 600; }
-  .shop-item-owned { font-size: 12px; color: var(--accent); font-weight: 500; }
+  .shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:1rem;}
+  .shop-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.2rem;display:flex;flex-direction:column;gap:.5rem;}
+  .shop-item-name{font-weight:600;font-size:.95rem;}
+  .shop-item-desc{font-size:13px;color:var(--muted);flex:1;line-height:1.5;}
+  .shop-item-price{font-size:1.1rem;font-family:'Lora',serif;color:var(--gold);font-weight:600;}
 
   /* ARCADE */
-  .arcade-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
-  .game-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; display: flex; flex-direction: column; }
-  .game-thumb { height: 120px; background: var(--surface2); display: flex; align-items: center; justify-content: center; font-size: 3rem; }
-  .game-info { padding: 1rem; flex: 1; display: flex; flex-direction: column; gap: .5rem; }
-  .game-name { font-weight: 600; font-size: .95rem; }
-  .game-cost { font-size: 12px; color: var(--muted); }
-  .game-cost span { color: var(--accent); font-weight: 600; }
-  .game-frame { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 999; background: #000; display: none; flex-direction: column; }
-  .game-frame.open { display: flex; }
-  .game-bar { background: #111; padding: .6rem 1rem; display: flex; align-items: center; justify-content: space-between; color: #fff; font-size: 13px; }
-  .game-bar-pts { color: #f0c040; font-weight: 600; }
-  .game-iframe { flex: 1; border: none; width: 100%; }
-
-  /* TRADE */
-  .trade-form { display: flex; flex-direction: column; gap: .8rem; max-width: 400px; }
-  .select-field { width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: var(--radius); font-family: 'DM Sans', sans-serif; font-size: 14px; background: var(--bg); color: var(--text); outline: none; }
+  .arcade-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1rem;}
+  .game-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;display:flex;flex-direction:column;}
+  .game-thumb{height:110px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:2.8rem;}
+  .game-info{padding:.9rem;flex:1;display:flex;flex-direction:column;gap:.45rem;}
+  .game-name{font-weight:600;font-size:.9rem;}
+  .game-cost-label{font-size:12px;color:var(--muted);}
+  .game-frame{position:fixed;top:0;left:0;right:0;bottom:0;z-index:999;background:#000;display:none;flex-direction:column;}
+  .game-frame.open{display:flex;}
+  .game-bar{background:#111;padding:.55rem 1rem;display:flex;align-items:center;justify-content:space-between;color:#fff;font-size:13px;gap:1rem;}
+  .game-bar-pts{color:#f0c040;font-weight:600;}
+  .game-iframe{flex:1;border:none;width:100%;}
 
   /* ADMIN */
-  .admin-tabs { display: flex; gap: 4px; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
-  .admin-tab { background: none; border: none; padding: 7px 16px; border-radius: var(--radius); cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--muted); }
-  .admin-tab.active { background: var(--accent); color: #fff; }
-  .admin-panel { display: none; }
-  .admin-panel.active { display: block; }
-  .user-row { display: flex; align-items: center; padding: .7rem 1rem; border-bottom: 1px solid var(--border); gap: 1rem; }
-  .user-row:last-child { border-bottom: none; }
-  .user-row-name { flex: 1; font-weight: 500; }
-  .user-row-pts { color: var(--accent); font-weight: 600; min-width: 80px; }
-  .tag { font-size: 11px; background: var(--info-bg); color: var(--info); border: 1px solid #c5d8ea; border-radius: 20px; padding: 2px 9px; }
-  .tag.admin { background: #f5eef8; color: #6a2080; border-color: #d4b0e8; }
-  .tag.upgrade { background: var(--gold-bg); color: var(--gold); border-color: #e8d080; }
-  .input-row { display: flex; gap: 8px; align-items: center; }
-  .input-sm { padding: 7px 10px; border: 1px solid var(--border); border-radius: var(--radius); font-family: 'DM Sans', sans-serif; font-size: 13px; background: var(--bg); color: var(--text); outline: none; }
-  .toast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--text); color: var(--bg); border-radius: var(--radius); padding: .75rem 1.2rem; font-size: 13px; z-index: 9999; opacity: 0; transform: translateY(8px); transition: all .25s; pointer-events: none; }
-  .toast.show { opacity: 1; transform: translateY(0); }
-  .divider { border: none; border-top: 1px solid var(--border); margin: 1.2rem 0; }
-  .schedule-row { display: flex; align-items: center; gap: 8px; padding: .5rem 0; border-bottom: 1px solid var(--border); font-size: 14px; }
-  .schedule-row:last-child { border-bottom: none; }
-  .schedule-day { width: 90px; font-weight: 500; }
-  .notice { background: var(--info-bg); border: 1px solid #c5d8ea; border-radius: var(--radius); padding: .8rem 1rem; font-size: 13px; color: var(--info); margin-bottom: 1rem; line-height: 1.6; }
-  .notice.warn { background: var(--gold-bg); border-color: #e8d080; color: #7a5c00; }
+  .admin-tabs{display:flex;gap:3px;margin-bottom:1.4rem;border-bottom:1px solid var(--border);padding-bottom:4px;}
+  .admin-tab{background:none;border:none;padding:6px 15px;border-radius:var(--radius);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--muted);}
+  .admin-tab.active{background:var(--accent);color:#fff;}
+  .admin-panel{display:none;} .admin-panel.active{display:block;}
+  .user-row{display:flex;align-items:center;padding:.65rem 1rem;border-bottom:1px solid var(--border);gap:.8rem;flex-wrap:wrap;}
+  .user-row:last-child{border-bottom:none;}
+  .schedule-row{display:flex;align-items:center;gap:.6rem;padding:.45rem 0;border-bottom:1px solid var(--border);font-size:14px;}
+  .schedule-row:last-child{border-bottom:none;}
+  .schedule-day{width:42px;font-weight:500;}
+
+  /* TOAST */
+  .toast{position:fixed;bottom:1.4rem;right:1.4rem;background:var(--text);color:var(--bg);border-radius:var(--radius);padding:.7rem 1.1rem;font-size:13px;z-index:9999;opacity:0;transform:translateY(6px);transition:all .22s;pointer-events:none;max-width:280px;}
+  .toast.show{opacity:1;transform:translateY(0);}
+
+  /* SETUP SCREEN */
+  #setup-screen{position:fixed;inset:0;background:var(--bg);z-index:9998;display:flex;align-items:center;justify-content:center;padding:1.5rem;}
+  .setup-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2rem;max-width:520px;width:100%;}
+  .setup-card h2{margin-bottom:.5rem;}
+  .setup-card p{color:var(--muted);font-size:14px;line-height:1.6;margin-bottom:1.2rem;}
+  .code-block{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:.8rem 1rem;font-family:monospace;font-size:12px;color:var(--text);margin-bottom:.6rem;white-space:pre-wrap;word-break:break-all;}
+  .step-num{display:inline-block;width:22px;height:22px;background:var(--accent);color:#fff;border-radius:50%;text-align:center;line-height:22px;font-size:12px;font-weight:600;margin-right:6px;}
+
+  /* LOADING */
+  .spinner{display:inline-block;width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  #loading-overlay{position:fixed;inset:0;background:var(--bg);z-index:9997;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.8rem;}
+  #loading-overlay p{color:var(--muted);font-size:14px;}
 </style>
 </head>
 <body>
@@ -151,8 +135,39 @@
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
+<!-- LOADING OVERLAY -->
+<div id="loading-overlay">
+  <div class="spinner" style="width:30px;height:30px;border-width:3px;"></div>
+  <p>Connecting to MathsPoint…</p>
+</div>
+
+<!-- FIREBASE SETUP SCREEN (shown if not configured) -->
+<div id="setup-screen" style="display:none;">
+  <div class="setup-card">
+    <h2>🔧 First-time setup</h2>
+    <p>MathsPoint needs a Firebase project to store shared data. This takes about 3 minutes and is completely free.</p>
+
+    <p><span class="step-num">1</span> Go to <a href="https://console.firebase.google.com" target="_blank" style="color:var(--accent)">console.firebase.google.com</a> and create a new project (disable Google Analytics — you don't need it).</p>
+
+    <p style="margin-top:.8rem;"><span class="step-num">2</span> In your project: click <strong>Build → Firestore Database → Create database</strong>, choose <strong>Start in test mode</strong>, pick any location.</p>
+
+    <p style="margin-top:.8rem;"><span class="step-num">3</span> Go to <strong>Project settings → Your apps → Add app → Web (&lt;/&gt;)</strong>. Copy the config values below into the fields.</p>
+
+    <p style="margin-top:.8rem;"><span class="step-num">4</span> Go to <strong>Build → Authentication → Get started → Email/Password → Enable</strong> and save.</p>
+
+    <hr class="divider">
+    <div class="form-group"><label>API Key</label><input type="text" id="cfg-apikey" placeholder="AIzaSy..."></div>
+    <div class="form-group"><label>Auth Domain</label><input type="text" id="cfg-authdomain" placeholder="your-project.firebaseapp.com"></div>
+    <div class="form-group"><label>Project ID</label><input type="text" id="cfg-projectid" placeholder="your-project-id"></div>
+    <div class="form-group"><label>App ID</label><input type="text" id="cfg-appid" placeholder="1:123456789:web:abc..."></div>
+    <div class="err" id="cfg-err"></div>
+    <button class="btn btn-primary" onclick="saveConfig()" style="width:100%;margin-top:.3rem;">Save & connect</button>
+    <p style="font-size:12px;color:var(--muted);margin-top:.8rem;text-align:center;">Config is saved in your browser. All your friends need to do this once too, or you can hardcode the values in the HTML.</p>
+  </div>
+</div>
+
 <!-- LANDING PAGE -->
-<div id="landing" class="page active">
+<div id="landing" class="page">
   <div class="landing-header">
     <div style="font-family:'Lora',serif;font-size:1.1rem;color:var(--accent);font-weight:600;">📐 MathsPoint</div>
     <div style="font-size:13px;color:var(--muted);">Collaborative Learning Platform</div>
@@ -162,152 +177,134 @@
       <h1>Welcome back</h1>
       <p>Sign in to access your personalised maths practice hub and track your progress.</p>
       <div class="edu-strip">📊 Track your problem-solving streaks, collect Maths Points, and collaborate with classmates on challenges.</div>
-      <div class="form-group">
-        <label>Username</label>
-        <input type="text" id="login-user" placeholder="Enter your username" autocomplete="username">
-      </div>
-      <div class="form-group">
-        <label>Password</label>
-        <input type="password" id="login-pass" placeholder="Enter your password" autocomplete="current-password">
-      </div>
+      <div class="form-group"><label>Email</label><input type="email" id="login-email" placeholder="your@email.com" autocomplete="email"></div>
+      <div class="form-group"><label>Password</label><input type="password" id="login-pass" placeholder="Password" autocomplete="current-password"></div>
       <div class="err" id="login-err"></div>
-      <button class="btn btn-primary" style="margin-top:.5rem" onclick="doLogin()">Sign in to MathsPoint</button>
-      <div style="text-align:center;margin-top:1rem;font-size:13px;color:var(--muted);">Don't have an account? <a href="#" style="color:var(--accent)" onclick="showRegister()">Register</a></div>
+      <button class="btn btn-primary" style="width:100%;margin-top:.4rem;" onclick="doLogin()" id="login-btn">Sign in to MathsPoint</button>
+      <div style="text-align:center;margin-top:.9rem;font-size:13px;color:var(--muted);">Don't have an account? <a href="#" style="color:var(--accent);" onclick="showView('register');return false;">Register</a></div>
+      <div style="text-align:center;margin-top:.4rem;font-size:12px;color:var(--muted);"><a href="#" style="color:var(--muted);" onclick="showSetup();return false;">⚙ Configure Firebase</a></div>
     </div>
   </div>
   <div class="landing-footer">
-    <div class="landing-footer-block">
-      <h3>About</h3>
-      <p>MathsPoint is a peer-led maths revision platform designed for collaborative study and friendly competition.</p>
-    </div>
-    <div class="landing-footer-block">
-      <h3>Features</h3>
-      <p>Daily challenges, point tracking, progress leaderboards, and study session tools to keep you engaged.</p>
-    </div>
-    <div class="landing-footer-block">
-      <h3>Points System</h3>
-      <p>Earn Maths Points during study sessions. Points reflect your engagement and can be used to unlock bonus resources.</p>
+    <div><h3>About</h3><p>MathsPoint is a peer-led maths revision platform designed for collaborative study and friendly competition.</p></div>
+    <div><h3>Features</h3><p>Daily challenges, point tracking, progress leaderboards, and study session tools to keep you engaged.</p></div>
+    <div><h3>Points system</h3><p>Earn Maths Points during study sessions. Points reflect your engagement and unlock bonus resources.</p></div>
+  </div>
+</div>
+
+<!-- REGISTER VIEW -->
+<div id="register" class="page">
+  <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;">
+    <div class="landing-card">
+      <h2 style="margin-bottom:.4rem;">Create account</h2>
+      <p style="color:var(--muted);font-size:14px;margin-bottom:1.3rem;">Your account will need admin approval before earning points.</p>
+      <div class="form-group"><label>Display name</label><input type="text" id="reg-name" placeholder="Your name"></div>
+      <div class="form-group"><label>Email</label><input type="email" id="reg-email" placeholder="your@email.com"></div>
+      <div class="form-group"><label>Password</label><input type="password" id="reg-pass" placeholder="Min 6 characters"></div>
+      <div class="err" id="reg-err"></div>
+      <button class="btn btn-primary" style="width:100%;margin-top:.4rem;" onclick="doRegister()" id="reg-btn">Create account</button>
+      <div style="text-align:center;margin-top:.8rem;font-size:13px;color:var(--muted);">Already have an account? <a href="#" style="color:var(--accent);" onclick="showView('landing');return false;">Sign in</a></div>
     </div>
   </div>
 </div>
 
-<!-- REGISTER MODAL -->
-<div id="reg-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:500;display:none;align-items:center;justify-content:center;">
-  <div class="landing-card" style="max-width:380px;">
-    <h2 style="margin-bottom:.5rem;">Create account</h2>
-    <p style="margin-bottom:1.2rem;font-size:13px;">Accounts require admin approval before earning points.</p>
-    <div class="form-group"><label>Choose a username</label><input type="text" id="reg-user" placeholder="Username"></div>
-    <div class="form-group"><label>Password</label><input type="password" id="reg-pass" placeholder="Password"></div>
-    <div class="form-group"><label>Confirm password</label><input type="password" id="reg-pass2" placeholder="Confirm password"></div>
-    <div class="err" id="reg-err"></div>
-    <div style="display:flex;gap:.5rem;margin-top:.5rem;">
-      <button class="btn btn-outline btn-sm" onclick="hideRegister()" style="flex:1">Cancel</button>
-      <button class="btn btn-primary btn-sm" onclick="doRegister()" style="flex:1">Create account</button>
+<!-- AWAITING APPROVAL VIEW -->
+<div id="awaiting" class="page">
+  <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;">
+    <div class="landing-card" style="text-align:center;">
+      <div style="font-size:3rem;margin-bottom:1rem;">⏳</div>
+      <h2 style="margin-bottom:.5rem;">Account pending</h2>
+      <p style="color:var(--muted);font-size:14px;margin-bottom:1.5rem;">Your account is awaiting admin approval. Check back soon!</p>
+      <button class="btn btn-outline btn-sm" onclick="doLogout()">Sign out</button>
     </div>
   </div>
 </div>
 
 <!-- MAIN APP -->
-<div id="app" style="display:none;">
+<div id="app" class="page">
   <nav>
     <div class="nav-logo">📐 MathsPoint</div>
     <div class="nav-links">
-      <button class="nav-btn active" onclick="showTab('hub',this)">Hub</button>
-      <button class="nav-btn" onclick="showTab('leaderboard',this)">Leaderboard</button>
-      <button class="nav-btn" onclick="showTab('arcade',this)">Practice Tools</button>
-      <button class="nav-btn" onclick="showTab('shop',this)">Resources</button>
-      <button class="nav-btn" onclick="showTab('trade',this)">Transfer</button>
-      <button class="nav-btn" id="admin-nav-btn" style="display:none" onclick="showTab('admin',this)">⚙ Admin</button>
+      <button class="nav-btn active" id="nb-hub" onclick="showTab('hub')">Hub</button>
+      <button class="nav-btn" id="nb-leaderboard" onclick="showTab('leaderboard')">Leaderboard</button>
+      <button class="nav-btn" id="nb-arcade" onclick="showTab('arcade')">Practice Tools</button>
+      <button class="nav-btn" id="nb-shop" onclick="showTab('shop')">Resources</button>
+      <button class="nav-btn" id="nb-trade" onclick="showTab('trade')">Transfer</button>
+      <button class="nav-btn" id="nb-admin" style="display:none" onclick="showTab('admin')">⚙ Admin</button>
     </div>
     <div class="nav-right">
       <span class="pts-badge" id="nav-pts">0 pts</span>
-      <span style="font-size:14px;color:var(--muted)" id="nav-user"></span>
+      <span style="font-size:13px;color:var(--muted);" id="nav-user"></span>
       <button class="btn btn-outline btn-sm" onclick="doLogout()">Sign out</button>
     </div>
   </nav>
 
-  <!-- HUB TAB -->
-  <div id="tab-hub" class="tab-content">
+  <!-- HUB -->
+  <div id="tab-hub" class="tab-pane">
     <div class="app-wrap">
       <div class="stat-row">
-        <div class="stat-card"><div class="stat-label">Your Maths Points</div><div class="stat-val" id="hub-pts">0</div><div class="stat-sub">Keep studying!</div></div>
-        <div class="stat-card"><div class="stat-label">Your Rank</div><div class="stat-val" id="hub-rank">#—</div><div class="stat-sub" id="hub-rank-sub">out of 0 students</div></div>
-        <div class="stat-card"><div class="stat-label">Points/minute</div><div class="stat-val" id="hub-rate">1</div><div class="stat-sub" id="hub-rate-sub">base rate</div></div>
-        <div class="stat-card"><div class="stat-label">Session status</div><div class="stat-val" id="hub-session" style="font-size:1.1rem;">—</div><div class="stat-sub" id="hub-session-sub">—</div></div>
+        <div class="stat-card"><div class="stat-label">Your Maths Points</div><div class="stat-val" id="h-pts">0</div><div class="stat-sub">Keep it up!</div></div>
+        <div class="stat-card"><div class="stat-label">Your rank</div><div class="stat-val" id="h-rank">#—</div><div class="stat-sub" id="h-rank-sub">—</div></div>
+        <div class="stat-card"><div class="stat-label">Points / minute</div><div class="stat-val" id="h-rate">1</div><div class="stat-sub" id="h-rate-sub">base rate</div></div>
+        <div class="stat-card"><div class="stat-label">Session status</div><div class="stat-val" id="h-sess" style="font-size:1.1rem;margin-top:.3rem;">—</div><div class="stat-sub" id="h-sess-sub">—</div></div>
       </div>
-      <div class="grid-2">
+      <div class="grid-2" style="gap:1rem;">
         <div class="card">
           <div class="section-title">Your profile</div>
-          <p style="font-size:14px;color:var(--muted);margin-bottom:1rem;">Logged in as <strong id="profile-name"></strong></p>
-          <div id="owned-upgrades" style="font-size:13px;color:var(--muted);">Loading upgrades…</div>
-          <hr class="divider">
-          <div style="font-size:13px;color:var(--muted);">Points are earned during scheduled study sessions. Check the schedule for active earning windows.</div>
+          <p style="font-size:14px;color:var(--muted);margin-bottom:.8rem;">Signed in as <strong id="h-username">—</strong></p>
+          <div id="h-upgrades" style="font-size:13px;color:var(--muted);line-height:1.7;">No upgrades yet.</div>
         </div>
         <div class="card">
-          <div class="section-title">Today's schedule</div>
-          <div id="hub-schedule" style="font-size:14px;color:var(--muted);">No sessions scheduled today.</div>
+          <div class="section-title">Today's earning window</div>
+          <div id="h-schedule" style="font-size:14px;color:var(--muted);">Loading…</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- LEADERBOARD TAB -->
-  <div id="tab-leaderboard" class="tab-content" style="display:none">
+  <!-- LEADERBOARD -->
+  <div id="tab-leaderboard" class="tab-pane" style="display:none;">
     <div class="app-wrap">
       <div class="section-title">Maths Points Leaderboard</div>
-      <div class="card" style="padding:0;overflow:hidden;" id="lb-list"></div>
+      <div class="card" style="padding:0;overflow:hidden;" id="lb-list"><div style="padding:2rem;text-align:center;color:var(--muted);font-size:14px;">Loading…</div></div>
     </div>
   </div>
 
-  <!-- ARCADE TAB -->
-  <div id="tab-arcade" class="tab-content" style="display:none">
+  <!-- ARCADE -->
+  <div id="tab-arcade" class="tab-pane" style="display:none;">
     <div class="app-wrap">
       <div class="section-title">Practice Tools</div>
-      <div class="notice">🎓 These interactive tools help you practise maths skills. Points are spent per minute of use during active sessions.</div>
+      <div class="notice">🎓 These interactive tools help you practise skills. Points are deducted per minute while playing during active sessions.</div>
       <div class="arcade-grid" id="arcade-grid"></div>
-      <div id="arcade-empty" style="display:none;color:var(--muted);font-size:14px;text-align:center;padding:3rem;">No practice tools available yet. Ask an admin to add some.</div>
+      <div id="arcade-empty" style="display:none;color:var(--muted);font-size:14px;text-align:center;padding:3rem;">No practice tools added yet.</div>
     </div>
-  </div>
-  <div class="game-frame" id="game-frame">
-    <div class="game-bar">
-      <span id="game-title-bar">Practice Tool</span>
-      <span>Cost: <span class="game-bar-pts" id="game-cost-bar">0</span> pts/min &nbsp;|&nbsp; Your points: <span class="game-bar-pts" id="game-pts-bar">0</span></span>
-      <button class="btn btn-danger btn-sm" onclick="closeGame()">✕ Exit</button>
-    </div>
-    <iframe class="game-iframe" id="game-iframe" src="about:blank" sandbox="allow-scripts allow-same-origin allow-forms allow-pointer-lock"></iframe>
   </div>
 
-  <!-- SHOP TAB -->
-  <div id="tab-shop" class="tab-content" style="display:none">
+  <!-- SHOP -->
+  <div id="tab-shop" class="tab-pane" style="display:none;">
     <div class="app-wrap">
       <div class="section-title">Resource Shop</div>
-      <div class="notice">Spend your Maths Points on resources, upgrades, and study bonuses.</div>
+      <div class="notice">Spend your Maths Points on upgrades and bonuses.</div>
       <div class="shop-grid" id="shop-grid"></div>
-      <div id="shop-empty" style="display:none;color:var(--muted);font-size:14px;text-align:center;padding:3rem;">No items in the shop yet. Check back later.</div>
+      <div id="shop-empty" style="display:none;color:var(--muted);font-size:14px;text-align:center;padding:3rem;">No items in the shop yet.</div>
     </div>
   </div>
 
-  <!-- TRADE TAB -->
-  <div id="tab-trade" class="tab-content" style="display:none">
+  <!-- TRADE -->
+  <div id="tab-trade" class="tab-pane" style="display:none;">
     <div class="app-wrap">
       <div class="section-title">Transfer Points</div>
-      <div class="card" style="max-width:460px;">
-        <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Send Maths Points to a classmate. Great for group study rewards!</p>
-        <div class="trade-form">
-          <div class="form-group"><label>Send to</label>
-            <select class="select-field" id="trade-to"></select>
-          </div>
-          <div class="form-group"><label>Amount</label>
-            <input type="number" class="input-sm" id="trade-amt" placeholder="Points" min="1" style="width:100%;padding:9px 12px;">
-          </div>
-          <button class="btn btn-primary" onclick="doTrade()">Send Points</button>
-        </div>
+      <div class="card" style="max-width:420px;">
+        <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Send Maths Points to a classmate.</p>
+        <div class="form-group"><label>Send to</label><select id="trade-to" class="input-field"></select></div>
+        <div class="form-group"><label>Amount</label><input type="number" id="trade-amt" placeholder="Points" min="1"></div>
+        <button class="btn btn-primary" onclick="doTrade()">Send Points</button>
       </div>
     </div>
   </div>
 
-  <!-- ADMIN TAB -->
-  <div id="tab-admin" class="tab-content" style="display:none">
+  <!-- ADMIN -->
+  <div id="tab-admin" class="tab-pane" style="display:none;">
     <div class="app-wrap">
       <div class="section-title">Admin Panel</div>
       <div class="admin-tabs">
@@ -317,619 +314,819 @@
         <button class="admin-tab" onclick="switchAdminTab('games-admin',this)">Practice Tools</button>
       </div>
 
-      <!-- users panel -->
       <div class="admin-panel active" id="ap-users">
-        <div class="card" style="margin-bottom:1rem;padding:1rem 1.2rem;">
-          <strong style="font-size:.9rem;">Pending approvals</strong>
-          <div id="pending-users" style="margin-top:.6rem;font-size:13px;color:var(--muted);">No pending registrations.</div>
+        <div class="card" style="margin-bottom:1rem;">
+          <strong style="font-size:.9rem;display:block;margin-bottom:.6rem;">Pending approvals</strong>
+          <div id="pending-list" style="font-size:13px;color:var(--muted);">None.</div>
         </div>
         <div class="card" style="padding:0;overflow:hidden;" id="admin-user-list"></div>
       </div>
 
-      <!-- schedule panel -->
       <div class="admin-panel" id="ap-schedule">
-        <div class="card" style="max-width:520px;">
-          <p style="font-size:14px;color:var(--muted);margin-bottom:1rem;">Set a daily earning window for each weekday. Students earn points every minute during the active window.</p>
-          <div id="schedule-editor"></div>
+        <div class="card" style="max-width:500px;">
+          <p style="font-size:14px;color:var(--muted);margin-bottom:1rem;">Set a daily earning window. Students earn points every minute during the active window.</p>
+          <div id="sched-editor"></div>
           <hr class="divider">
           <button class="btn btn-primary btn-sm" onclick="saveSchedule()">Save schedule</button>
         </div>
       </div>
 
-      <!-- shop admin panel -->
       <div class="admin-panel" id="ap-shop-admin">
-        <div class="card" style="max-width:520px;margin-bottom:1rem;">
-          <strong style="font-size:.9rem;display:block;margin-bottom:.8rem;">Add shop item</strong>
-          <div class="form-group"><label>Item name</label><input class="input-sm" id="si-name" placeholder="e.g. Double Points Upgrade" style="width:100%;"></div>
-          <div class="form-group"><label>Description</label><input class="input-sm" id="si-desc" placeholder="What does this give?" style="width:100%;"></div>
-          <div class="form-group"><label>Cost (points)</label><input type="number" class="input-sm" id="si-cost" placeholder="50" style="width:100%;"></div>
+        <div class="card" style="max-width:500px;margin-bottom:1rem;">
+          <strong style="font-size:.9rem;display:block;margin-bottom:.75rem;">Add shop item</strong>
+          <div class="form-group"><label>Name</label><input type="text" id="si-name" placeholder="e.g. Double Points Upgrade"></div>
+          <div class="form-group"><label>Description</label><input type="text" id="si-desc" placeholder="What does this give the student?"></div>
+          <div class="form-group"><label>Cost (points)</label><input type="number" id="si-cost" placeholder="100"></div>
           <div class="form-group"><label>Type</label>
-            <select class="select-field" id="si-type">
-              <option value="double_points">Double Points (2pts/min)</option>
+            <select id="si-type" onchange="siTypeChange()">
+              <option value="double_points">Double Points (2 pts/min)</option>
               <option value="game_access">Permanent Game Access</option>
               <option value="cosmetic">Cosmetic / Badge</option>
             </select>
           </div>
-          <div class="form-group" id="si-game-wrap" style="display:none;"><label>Game (for game access)</label><select class="select-field" id="si-game-id"></select></div>
+          <div id="si-game-wrap" style="display:none;" class="form-group"><label>Which game</label><select id="si-game-sel"></select></div>
           <button class="btn btn-primary btn-sm" onclick="addShopItem()">Add item</button>
         </div>
-        <div class="card" style="padding:0;overflow:hidden;max-width:520px;" id="admin-shop-list"></div>
+        <div class="card" style="padding:0;overflow:hidden;max-width:500px;" id="admin-shop-list"></div>
       </div>
 
-      <!-- games admin panel -->
       <div class="admin-panel" id="ap-games-admin">
-        <div class="card" style="max-width:520px;margin-bottom:1rem;">
-          <strong style="font-size:.9rem;display:block;margin-bottom:.8rem;">Add practice tool</strong>
-          <div class="form-group"><label>Name</label><input class="input-sm" id="g-name" placeholder="e.g. 2048" style="width:100%;"></div>
-          <div class="form-group"><label>GitHub Pages / External URL</label><input class="input-sm" id="g-url" placeholder="https://..." style="width:100%;"></div>
-          <div class="form-group"><label>Emoji icon</label><input class="input-sm" id="g-icon" placeholder="🎮" style="width:80px;"></div>
-          <div class="form-group"><label>Cost per minute (pts)</label><input type="number" class="input-sm" id="g-cost" placeholder="1" style="width:100%;"></div>
-          <div class="form-group"><label>Requires purchase?</label>
-            <select class="select-field" id="g-gated">
-              <option value="0">Free (costs points per minute)</option>
-              <option value="1">Locked (must own shop item)</option>
-            </select>
+
+        <!-- BUNDLER TOOL -->
+        <div class="card" style="max-width:680px;margin-bottom:1rem;">
+          <strong style="font-size:.9rem;display:block;margin-bottom:.4rem;">📦 File bundler</strong>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:.9rem;line-height:1.6;">Drop all the game files here (HTML, JS, CSS, images — anything). The bundler will inline JS and CSS directly into the HTML and convert images to base64, producing one self-contained file ready to add below.</p>
+
+          <!-- drop zone -->
+          <div id="drop-zone" style="border:2px dashed var(--border);border-radius:var(--radius-lg);padding:2rem;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:.9rem;background:var(--surface2);"
+            ondragover="dzOver(event)" ondragleave="dzLeave()" ondrop="dzDrop(event)" onclick="document.getElementById('file-picker').click()">
+            <div style="font-size:2rem;margin-bottom:.4rem;">📂</div>
+            <div style="font-size:14px;font-weight:500;color:var(--text);">Drop game files here or click to browse</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:.3rem;">HTML · JS · CSS · PNG · JPG · GIF · WebP · SVG · WOFF · WOFF2 · MP3 · OGG · WAV</div>
           </div>
-          <button class="btn btn-primary btn-sm" onclick="addGame()">Add tool</button>
+          <input type="file" id="file-picker" multiple style="display:none" onchange="dzPick(this.files)">
+
+          <!-- file list -->
+          <div id="bundler-file-list" style="display:none;margin-bottom:.9rem;">
+            <div style="font-size:13px;font-weight:500;margin-bottom:.4rem;">Files loaded:</div>
+            <div id="bundler-files" style="font-size:12px;color:var(--muted);line-height:2;"></div>
+          </div>
+
+          <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;">
+            <button class="btn btn-primary btn-sm" id="bundle-btn" onclick="runBundler()" disabled>⚙ Bundle into one file</button>
+            <button class="btn btn-outline btn-sm" onclick="clearBundler()">Clear</button>
+            <span id="bundle-status" style="font-size:12px;color:var(--muted);"></span>
+          </div>
         </div>
-        <div class="card" style="padding:0;overflow:hidden;max-width:520px;" id="admin-games-list"></div>
+
+        <!-- ADD GAME FORM -->
+        <div class="card" style="max-width:680px;margin-bottom:1rem;">
+          <strong style="font-size:.9rem;display:block;margin-bottom:.75rem;">Add practice tool</strong>
+          <div style="display:grid;grid-template-columns:1fr 80px;gap:.7rem;">
+            <div class="form-group" style="margin:0"><label>Name</label><input type="text" id="g-name" placeholder="e.g. 2048"></div>
+            <div class="form-group" style="margin:0"><label>Icon</label><input type="text" id="g-icon" placeholder="🎮"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:.7rem;">
+            <div class="form-group" style="margin:0"><label>Cost per minute (pts)</label><input type="number" id="g-cost" placeholder="1" min="0"></div>
+            <div class="form-group" style="margin:0"><label>Access</label>
+              <select id="g-gated">
+                <option value="0">Free (costs pts/min)</option>
+                <option value="1">Locked — shop item required</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group" style="margin-top:.7rem;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+              <label style="margin:0;">Game HTML (paste manually or use bundler above)</label>
+              <span id="code-size" style="font-size:11px;color:var(--muted);"></span>
+            </div>
+            <textarea id="g-code" placeholder="Paste complete self-contained HTML here, or use the bundler above to auto-generate it from separate files..." style="width:100%;height:160px;padding:9px 11px;border:1px solid var(--border);border-radius:var(--radius);font-family:monospace;font-size:12px;background:var(--bg);color:var(--text);resize:vertical;outline:none;" oninput="updateCodeSize()"></textarea>
+          </div>
+          <button class="btn btn-primary btn-sm" id="add-game-btn" onclick="addGame()">Add to arcade</button>
+        </div>
+
+        <div class="card" style="padding:0;overflow:hidden;max-width:680px;" id="admin-games-list"></div>
       </div>
     </div>
   </div>
 </div>
 
-<script>
-// ===================== STORAGE LAYER =====================
-// All data stored in localStorage under 'mpdata' key
-const STORE_KEY = 'mpdata_v2';
+<!-- GAME FULLSCREEN FRAME -->
+<div class="game-frame" id="game-frame">
+  <div class="game-bar">
+    <span id="gbar-title" style="font-weight:600;">Practice Tool</span>
+    <span>Cost: <span class="game-bar-pts" id="gbar-cost">0</span> pts/min &nbsp;|&nbsp; Your points: <span class="game-bar-pts" id="gbar-pts">0</span></span>
+    <button class="btn btn-danger btn-sm" onclick="closeGame()">✕ Exit</button>
+  </div>
+  <iframe class="game-iframe" id="game-iframe" src="about:blank" sandbox="allow-scripts allow-forms allow-pointer-lock allow-orientation-lock allow-modals"></iframe>
+</div>
 
-function loadData() {
-  try { return JSON.parse(localStorage.getItem(STORE_KEY)) || defaultData(); }
-  catch { return defaultData(); }
+<!-- Firebase SDKs -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, getDocs, onSnapshot, deleteDoc, arrayUnion, increment, serverTimestamp, query, orderBy }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// ── CONFIG ──────────────────────────────────────────────────────────────────
+// OPTION A: Hardcode your Firebase config here (recommended for shared hosting)
+// Just fill in your values and the setup screen won't appear.
+const HARDCODED_CONFIG = {
+  apiKey: "AIzaSyD6i_7qrUFaDBJ0Fvqgv5W3EYE32awqt-U",
+  authDomain: "mathspoints-6ac60.firebaseapp.com",
+  projectId: "mathspoints-6ac60",
+  appId: "1:757251553249:web:3c3260e9b3abef5a1d84a0",
+};
+// OPTION B: If left blank above, users enter config via the setup screen (saved in localStorage).
+
+function getConfig() {
+  // If hardcoded, use that
+  if (HARDCODED_CONFIG.apiKey && HARDCODED_CONFIG.projectId) return HARDCODED_CONFIG;
+  // Otherwise try localStorage
+  try {
+    const s = localStorage.getItem('mp_firebase_config');
+    if (s) return JSON.parse(s);
+  } catch {}
+  return null;
 }
-function saveData(d) { localStorage.setItem(STORE_KEY, JSON.stringify(d)); }
 
-function defaultData() {
-  return {
-    users: [{
-      id: 'admin', username: 'admin', password: 'admin123',
-      isAdmin: true, approved: true, points: 0,
-      upgrades: [], joinedAt: Date.now()
-    }],
-    pending: [],
-    schedule: {
-      Mon: { enabled: false, start: '09:00', end: '10:00' },
-      Tue: { enabled: false, start: '09:00', end: '10:00' },
-      Wed: { enabled: false, start: '09:00', end: '10:00' },
-      Thu: { enabled: false, start: '09:00', end: '10:00' },
-      Fri: { enabled: false, start: '09:00', end: '10:00' },
-    },
-    shopItems: [],
-    games: [],
-  };
-}
-
-// ===================== STATE =====================
-let D = loadData();
-let currentUser = null;
-let gameInterval = null;
+// ── BOOTSTRAP ───────────────────────────────────────────────────────────────
+let app, auth, db;
+let currentUserData = null;
 let pointInterval = null;
-let activeGameId = null;
+let gameInterval = null;
 
-// ===================== AUTH =====================
-function doLogin() {
-  const u = document.getElementById('login-user').value.trim();
-  const p = document.getElementById('login-pass').value;
-  const user = D.users.find(x => x.username === u && x.password === p);
-  if (!user) { document.getElementById('login-err').textContent = 'Incorrect username or password.'; return; }
-  if (!user.approved) { document.getElementById('login-err').textContent = 'Your account is awaiting admin approval.'; return; }
-  currentUser = user;
-  document.getElementById('login-err').textContent = '';
-  document.getElementById('landing').classList.remove('active');
-  document.getElementById('app').style.display = 'block';
-  document.getElementById('nav-user').textContent = user.username;
-  document.getElementById('admin-nav-btn').style.display = user.isAdmin ? '' : 'none';
-  refreshAll();
-  startPointClock();
-}
+window.saveConfig = function() {
+  const cfg = {
+    apiKey: document.getElementById('cfg-apikey').value.trim(),
+    authDomain: document.getElementById('cfg-authdomain').value.trim(),
+    projectId: document.getElementById('cfg-projectid').value.trim(),
+    appId: document.getElementById('cfg-appid').value.trim(),
+  };
+  if (!cfg.apiKey || !cfg.projectId) { document.getElementById('cfg-err').textContent = 'Fill in all fields.'; return; }
+  localStorage.setItem('mp_firebase_config', JSON.stringify(cfg));
+  location.reload();
+};
 
-function showRegister() {
-  document.getElementById('reg-overlay').style.display = 'flex';
-}
-function hideRegister() {
-  document.getElementById('reg-overlay').style.display = 'none';
-}
+window.showSetup = function() {
+  document.getElementById('setup-screen').style.display = 'flex';
+  document.getElementById('loading-overlay').style.display = 'none';
+};
 
-function doRegister() {
-  const u = document.getElementById('reg-user').value.trim();
-  const p = document.getElementById('reg-pass').value;
-  const p2 = document.getElementById('reg-pass2').value;
-  if (!u || !p) { document.getElementById('reg-err').textContent = 'Fill all fields.'; return; }
-  if (p !== p2) { document.getElementById('reg-err').textContent = 'Passwords do not match.'; return; }
-  D = loadData();
-  if (D.users.find(x => x.username === u) || (D.pending||[]).find(x=>x.username===u)) {
-    document.getElementById('reg-err').textContent = 'Username already taken.'; return;
+const cfg = getConfig();
+if (!cfg) {
+  document.getElementById('loading-overlay').style.display = 'none';
+  document.getElementById('setup-screen').style.display = 'flex';
+} else {
+  try {
+    app = initializeApp(cfg);
+    auth = getAuth(app);
+    db = getFirestore(app);
+    bootApp();
+  } catch(e) {
+    document.getElementById('loading-overlay').style.display = 'none';
+    document.getElementById('setup-screen').style.display = 'flex';
+    document.getElementById('cfg-err').textContent = 'Firebase init failed: ' + e.message;
   }
-  if (!D.pending) D.pending = [];
-  D.pending.push({ id: 'u'+Date.now(), username: u, password: p, joinedAt: Date.now() });
-  saveData(D);
-  hideRegister();
-  toast('Registration submitted! An admin will approve your account.');
 }
 
-function doLogout() {
-  currentUser = null;
-  clearInterval(pointInterval);
-  document.getElementById('app').style.display = 'none';
-  document.getElementById('landing').classList.add('active');
-  document.getElementById('login-pass').value = '';
-}
-
-// ===================== NAV =====================
-function showTab(name, btn) {
-  document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-'+name).style.display = 'block';
-  if(btn) btn.classList.add('active');
-  if(name==='leaderboard') renderLeaderboard();
-  if(name==='shop') renderShop();
-  if(name==='arcade') renderArcade();
-  if(name==='trade') renderTrade();
-  if(name==='admin') renderAdmin();
-}
-
-function switchAdminTab(name, btn) {
-  document.querySelectorAll('.admin-panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.admin-tab').forEach(b=>b.classList.remove('active'));
-  document.getElementById('ap-'+name).classList.add('active');
-  btn.classList.add('active');
-  if(name==='shop-admin') renderAdminShop();
-  if(name==='games-admin') renderAdminGames();
-  if(name==='users') renderAdminUsers();
-}
-
-// ===================== POINT CLOCK =====================
-function isSessionActive() {
-  D = loadData();
-  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-  const now = new Date();
-  const dayName = days[now.getDay()];
-  const sched = D.schedule[dayName];
-  if (!sched || !sched.enabled) return false;
-  const [sh,sm] = sched.start.split(':').map(Number);
-  const [eh,em] = sched.end.split(':').map(Number);
-  const startMin = sh*60+sm, endMin = eh*60+em;
-  const nowMin = now.getHours()*60+now.getMinutes();
-  return nowMin >= startMin && nowMin < endMin;
-}
-
-function getUserRate(user) {
-  D = loadData();
-  const owned = user.upgrades || [];
-  const hasDouble = owned.some(id => {
-    const si = D.shopItems.find(i => i.id===id);
-    return si && si.type === 'double_points';
+// ── HELPERS ──────────────────────────────────────────────────────────────────
+function showView(id) {
+  ['landing','register','awaiting','app'].forEach(v => {
+    const el = document.getElementById(v);
+    if (el) { el.classList.remove('active'); el.style.display = ''; }
   });
-  return hasDouble ? 2 : 1;
+  const target = document.getElementById(id);
+  if (target) { target.classList.add('active'); target.style.display = id === 'app' ? 'block' : 'block'; }
+}
+window.showView = showView;
+
+let toastTimer;
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2800);
+}
+window.toast = toast;
+
+// ── BOOT ─────────────────────────────────────────────────────────────────────
+function bootApp() {
+  onAuthStateChanged(auth, async (user) => {
+    document.getElementById('loading-overlay').style.display = 'none';
+    if (!user) { showView('landing'); return; }
+    // Load user profile from Firestore
+    const uRef = doc(db, 'users', user.uid);
+    const uSnap = await getDoc(uRef);
+    if (!uSnap.exists()) { showView('landing'); await signOut(auth); return; }
+    currentUserData = { uid: user.uid, ...uSnap.data() };
+    if (!currentUserData.approved) { showView('awaiting'); return; }
+    // All good — show app
+    showView('app');
+    document.getElementById('nav-user').textContent = currentUserData.displayName || currentUserData.email;
+    document.getElementById('nb-admin').style.display = currentUserData.isAdmin ? '' : 'none';
+    refreshHubUI();
+    startPointClock();
+    listenUsers();
+    showTab('hub');
+  });
 }
 
-function startPointClock() {
+// ── AUTH ──────────────────────────────────────────────────────────────────────
+window.doLogin = async function() {
+  const email = document.getElementById('login-email').value.trim();
+  const pass = document.getElementById('login-pass').value;
+  const btn = document.getElementById('login-btn');
+  document.getElementById('login-err').textContent = '';
+  btn.disabled = true; btn.textContent = 'Signing in…';
+  try {
+    await signInWithEmailAndPassword(auth, email, pass);
+  } catch(e) {
+    document.getElementById('login-err').textContent = friendlyAuthError(e.code);
+    btn.disabled = false; btn.textContent = 'Sign in to MathsPoint';
+  }
+};
+
+window.doRegister = async function() {
+  const name = document.getElementById('reg-name').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
+  const pass = document.getElementById('reg-pass').value;
+  const btn = document.getElementById('reg-btn');
+  document.getElementById('reg-err').textContent = '';
+  if (!name) { document.getElementById('reg-err').textContent = 'Enter your name.'; return; }
+  btn.disabled = true; btn.textContent = 'Creating…';
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, pass);
+    await setDoc(doc(db, 'users', cred.user.uid), {
+      displayName: name, email, isAdmin: false, approved: false,
+      points: 0, upgrades: [], createdAt: serverTimestamp()
+    });
+    // sign out immediately so they see the pending screen
+    await signOut(auth);
+    await signInWithEmailAndPassword(auth, email, pass);
+  } catch(e) {
+    document.getElementById('reg-err').textContent = friendlyAuthError(e.code);
+    btn.disabled = false; btn.textContent = 'Create account';
+  }
+};
+
+window.doLogout = async function() {
+  clearInterval(pointInterval); clearInterval(gameInterval);
+  closeGame();
+  await signOut(auth);
+};
+
+function friendlyAuthError(code) {
+  const map = {
+    'auth/user-not-found': 'No account with that email.',
+    'auth/wrong-password': 'Incorrect password.',
+    'auth/invalid-email': 'Invalid email address.',
+    'auth/email-already-in-use': 'Email already registered.',
+    'auth/weak-password': 'Password must be at least 6 characters.',
+    'auth/invalid-credential': 'Incorrect email or password.',
+    'auth/too-many-requests': 'Too many attempts. Try again later.',
+  };
+  return map[code] || 'Something went wrong. Try again.';
+}
+
+// ── LIVE USER LISTENER ────────────────────────────────────────────────────────
+function listenUsers() {
+  onSnapshot(doc(db, 'users', currentUserData.uid), (snap) => {
+    if (!snap.exists()) return;
+    currentUserData = { uid: currentUserData.uid, ...snap.data() };
+    refreshHubUI();
+  });
+}
+
+// ── POINT CLOCK ───────────────────────────────────────────────────────────────
+function isSessionActive(sched) {
+  if (!sched) return false;
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const d = days[new Date().getDay()];
+  const s = sched[d];
+  if (!s || !s.enabled) return false;
+  const [sh,sm] = s.start.split(':').map(Number);
+  const [eh,em] = s.end.split(':').map(Number);
+  const now = new Date().getHours()*60 + new Date().getMinutes();
+  return now >= sh*60+sm && now < eh*60+em;
+}
+
+function getUserRate() {
+  return (currentUserData.upgrades||[]).includes('double_points') ? 2 : 1;
+}
+
+async function startPointClock() {
   clearInterval(pointInterval);
-  pointInterval = setInterval(() => {
-    D = loadData();
-    const u = D.users.find(x=>x.id===currentUser.id);
-    if (!u) return;
-    currentUser = u;
-    const active = isSessionActive();
-    if (active) {
-      const rate = getUserRate(u);
-      u.points = (u.points||0) + rate;
-      saveData(D);
-      currentUser = u;
+  pointInterval = setInterval(async () => {
+    const schedSnap = await getDoc(doc(db, 'config', 'schedule'));
+    const sched = schedSnap.exists() ? schedSnap.data() : null;
+    if (isSessionActive(sched)) {
+      const rate = getUserRate();
+      await updateDoc(doc(db, 'users', currentUserData.uid), { points: increment(rate) });
     }
-    updateNavPts();
-    updateHubStats();
+    refreshHubUI();
   }, 60000);
-  updateNavPts();
-  updateHubStats();
+  refreshHubUI();
 }
 
-function updateNavPts() {
-  if(!currentUser) return;
-  D=loadData();
-  const u=D.users.find(x=>x.id===currentUser.id);
-  if(u) {
-    currentUser=u;
-    document.getElementById('nav-pts').textContent = u.points+' pts';
+// ── HUB ────────────────────────────────────────────────────────────────────────
+async function refreshHubUI() {
+  if (!currentUserData) return;
+  document.getElementById('nav-pts').textContent = (currentUserData.points||0) + ' pts';
+  document.getElementById('h-pts').textContent = currentUserData.points||0;
+  document.getElementById('h-username').textContent = currentUserData.displayName;
+  document.getElementById('h-rate').textContent = getUserRate();
+  document.getElementById('h-rate-sub').textContent = getUserRate() > 1 ? 'upgraded!' : 'base rate';
+
+  // rank
+  const usersSnap = await getDocs(collection(db, 'users'));
+  const allUsers = usersSnap.docs.filter(d=>d.data().approved).map(d=>d.data()).sort((a,b)=>b.points-a.points);
+  const rank = allUsers.findIndex(u=>u.email===currentUserData.email) + 1;
+  document.getElementById('h-rank').textContent = '#' + rank;
+  document.getElementById('h-rank-sub').textContent = 'out of ' + allUsers.length + ' students';
+
+  // schedule
+  const schedSnap = await getDoc(doc(db, 'config', 'schedule'));
+  const sched = schedSnap.exists() ? schedSnap.data() : null;
+  const active = isSessionActive(sched);
+  document.getElementById('h-sess').textContent = active ? '🟢 Active' : '⚪ Inactive';
+  document.getElementById('h-sess-sub').textContent = active ? 'Earning ' + getUserRate() + ' pt/min' : 'No session now';
+
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const d = days[new Date().getDay()];
+  const todaySched = sched && sched[d];
+  const schedEl = document.getElementById('h-schedule');
+  if (!todaySched || !todaySched.enabled) {
+    schedEl.innerHTML = '<span style="color:var(--muted)">No earning session today.</span>';
+  } else {
+    schedEl.innerHTML = `<strong>Today (${d}):</strong> ${todaySched.start} – ${todaySched.end}<br><span style="font-size:13px;color:var(--muted)">You earn ${getUserRate()} pt/min during this window.</span>`;
   }
+
+  // upgrades
+  const upgEl = document.getElementById('h-upgrades');
+  const upgs = currentUserData.upgrades || [];
+  upgEl.innerHTML = upgs.length ? upgs.map(u => '✅ ' + u).join('<br>') : 'No upgrades yet. Visit the Resources shop!';
 }
 
-// ===================== HUB =====================
-function updateHubStats() {
-  if(!currentUser) return;
-  D=loadData();
-  const u=D.users.find(x=>x.id===currentUser.id);
-  if(!u) return;
-  document.getElementById('hub-pts').textContent = u.points;
-  document.getElementById('profile-name').textContent = u.username;
-  const sorted = D.users.filter(x=>x.approved).sort((a,b)=>b.points-a.points);
-  const rank = sorted.findIndex(x=>x.id===u.id)+1;
-  document.getElementById('hub-rank').textContent = '#'+rank;
-  document.getElementById('hub-rank-sub').textContent = 'out of '+sorted.length+' students';
-  const rate = getUserRate(u);
-  document.getElementById('hub-rate').textContent = rate;
-  document.getElementById('hub-rate-sub').textContent = rate>1?'upgraded rate':'base rate';
-  const active = isSessionActive();
-  document.getElementById('hub-session').textContent = active ? '🟢 Active' : '⚪ Inactive';
-  document.getElementById('hub-session-sub').textContent = active ? 'Earning '+rate+' pt/min' : 'No session now';
-  // Owned upgrades
-  const owned = u.upgrades||[];
-  const ownedEl = document.getElementById('owned-upgrades');
-  if(owned.length===0) { ownedEl.textContent='No upgrades yet. Visit the Resources shop!'; }
-  else {
-    ownedEl.innerHTML = '<strong style="font-size:.85rem;">Your upgrades:</strong><br>'+
-      owned.map(id=>{const si=D.shopItems.find(i=>i.id===id);return si?'✅ '+si.name:'?';}).join('<br>');
-  }
-  // Schedule today
-  const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-  const dayName=days[new Date().getDay()];
-  const sched=D.schedule[dayName];
-  const schedEl=document.getElementById('hub-schedule');
-  if(!sched||!sched.enabled) schedEl.innerHTML='<span style="color:var(--muted)">No earning session scheduled for today.</span>';
-  else schedEl.innerHTML='<strong>Today ('+dayName+'):</strong> '+sched.start+' – '+sched.end+
-    '<br><span style="font-size:13px;color:var(--muted)">Earn points every minute during this window.</span>';
-}
+// ── LEADERBOARD ───────────────────────────────────────────────────────────────
+window.showTab = async function(name) {
+  document.querySelectorAll('.tab-pane').forEach(t => t.style.display = 'none');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const pane = document.getElementById('tab-' + name);
+  if (pane) pane.style.display = 'block';
+  const btn = document.getElementById('nb-' + name);
+  if (btn) btn.classList.add('active');
 
-function refreshAll() { updateHubStats(); }
+  if (name === 'leaderboard') await renderLeaderboard();
+  if (name === 'shop') await renderShop();
+  if (name === 'arcade') await renderArcade();
+  if (name === 'trade') await renderTrade();
+  if (name === 'admin') { renderAdmin(); }
+};
 
-// ===================== LEADERBOARD =====================
-function renderLeaderboard() {
-  D=loadData();
-  const sorted = D.users.filter(x=>x.approved).sort((a,b)=>b.points-a.points);
+async function renderLeaderboard() {
+  const snap = await getDocs(collection(db, 'users'));
+  const users = snap.docs.filter(d=>d.data().approved).map(d=>d.data()).sort((a,b)=>b.points-a.points);
   const el = document.getElementById('lb-list');
-  if(!sorted.length){el.innerHTML='<div style="padding:2rem;text-align:center;color:var(--muted);font-size:14px;">No users yet.</div>';return;}
-  el.innerHTML = sorted.map((u,i)=>{
+  if (!users.length) { el.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--muted)">No users yet.</div>'; return; }
+  el.innerHTML = users.map((u,i) => {
     const rankClass = i===0?'gold':i===1?'silver':i===2?'bronze':'';
     const medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
-    const adminTag = u.isAdmin?'<span class="tag admin">admin</span>':'';
-    const upgTag = (u.upgrades&&u.upgrades.length)?'<span class="lb-badge">⚡ upgraded</span>':'';
+    const adminTag = u.isAdmin ? '<span class="tag tag-admin">admin</span>' : '';
+    const upgTag = (u.upgrades||[]).length ? '<span class="tag tag-upg">⚡ upgraded</span>' : '';
     return `<div class="lb-row">
-      <div class="lb-rank ${rankClass}">${medal||('#'+(i+1))}</div>
-      <div class="lb-name">${u.username}${adminTag}</div>
-      ${upgTag}
-      <div class="lb-pts">${u.points} pts</div>
+      <div class="lb-rank ${rankClass}">${medal || '#'+(i+1)}</div>
+      <div class="lb-name">${u.displayName||u.email}${adminTag}${upgTag}</div>
+      <div class="lb-pts">${u.points||0} pts</div>
     </div>`;
   }).join('');
 }
 
-// ===================== SHOP =====================
-function renderShop() {
-  D=loadData();
-  const el=document.getElementById('shop-grid');
-  const empty=document.getElementById('shop-empty');
-  if(!D.shopItems||!D.shopItems.length){el.innerHTML='';empty.style.display='block';return;}
-  empty.style.display='none';
-  const u=D.users.find(x=>x.id===currentUser.id);
-  el.innerHTML = D.shopItems.map(item=>{
-    const owned = (u.upgrades||[]).includes(item.id);
+// ── SHOP ──────────────────────────────────────────────────────────────────────
+async function renderShop() {
+  const snap = await getDocs(collection(db, 'shopItems'));
+  const items = snap.docs.map(d=>({id:d.id,...d.data()}));
+  const el = document.getElementById('shop-grid');
+  const empty = document.getElementById('shop-empty');
+  if (!items.length) { el.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display = 'none';
+  const owned = currentUserData.upgrades || [];
+  el.innerHTML = items.map(item => {
+    const isOwned = owned.includes(item.id);
     return `<div class="shop-item">
       <div class="shop-item-name">${item.name}</div>
       <div class="shop-item-desc">${item.desc}</div>
       <div class="shop-item-price">⭐ ${item.cost} pts</div>
-      ${owned?`<div class="shop-item-owned">✅ Already owned</div>`:
-        `<button class="btn btn-gold btn-sm" onclick="buyItem('${item.id}')">Purchase</button>`}
+      ${isOwned
+        ? '<span style="color:var(--accent);font-size:13px;font-weight:500;">✅ Owned</span>'
+        : `<button class="btn btn-gold btn-sm" onclick="buyItem('${item.id}','${item.cost}')">Purchase</button>`}
     </div>`;
   }).join('');
 }
 
-function buyItem(id) {
-  D=loadData();
-  const u=D.users.find(x=>x.id===currentUser.id);
-  const item=D.shopItems.find(i=>i.id===id);
-  if(!u||!item) return;
-  if((u.upgrades||[]).includes(id)){toast('You already own this!');return;}
-  if(u.points<item.cost){toast('Not enough points! Need '+item.cost+', have '+u.points);return;}
-  u.points-=item.cost;
-  if(!u.upgrades) u.upgrades=[];
-  u.upgrades.push(id);
-  saveData(D);
-  currentUser=u;
-  toast('Purchased: '+item.name+'!');
-  renderShop();
-  updateNavPts();
-}
+window.buyItem = async function(id, cost) {
+  const pts = currentUserData.points || 0;
+  const c = parseInt(cost);
+  if (pts < c) { toast('Not enough points! Need ' + c + ', have ' + pts); return; }
+  await updateDoc(doc(db, 'users', currentUserData.uid), {
+    points: increment(-c),
+    upgrades: arrayUnion(id)
+  });
+  toast('Purchased!');
+  await renderShop();
+};
 
-// ===================== ARCADE =====================
-function renderArcade() {
-  D=loadData();
-  const el=document.getElementById('arcade-grid');
-  const empty=document.getElementById('arcade-empty');
-  if(!D.games||!D.games.length){el.innerHTML='';empty.style.display='block';return;}
+// ── ARCADE ────────────────────────────────────────────────────────────────────
+// We store all game docs in memory so openGame can look up the code blob without
+// re-fetching Firestore (code blobs can be large).
+let _gameCache = [];
+
+async function renderArcade() {
+  const snap = await getDocs(collection(db, 'games'));
+  _gameCache = snap.docs.map(d=>({id:d.id,...d.data()}));
+  const el = document.getElementById('arcade-grid');
+  const empty = document.getElementById('arcade-empty');
+  if (!_gameCache.length) { el.innerHTML=''; empty.style.display='block'; return; }
   empty.style.display='none';
-  const u=D.users.find(x=>x.id===currentUser.id);
-  el.innerHTML = D.games.map(g=>{
-    let locked=false, lockReason='';
-    if(g.gated) {
-      const accessItem=D.shopItems.find(i=>i.type==='game_access'&&i.gameId===g.id);
-      if(accessItem&&!(u.upgrades||[]).includes(accessItem.id)) {
-        locked=true; lockReason='Purchase "'+accessItem.name+'" in Resources to unlock.';
-      }
+  const owned = currentUserData.upgrades || [];
+  el.innerHTML = _gameCache.map(g => {
+    let locked = false, lockMsg = '';
+    if (g.gated) {
+      locked = !owned.includes('game_access_' + g.id);
+      lockMsg = 'Purchase access from the Resources shop.';
     }
     return `<div class="game-card">
       <div class="game-thumb">${g.icon||'🎮'}</div>
       <div class="game-info">
         <div class="game-name">${g.name}</div>
-        <div class="game-cost">Cost: <span>${g.cost} pts/min</span></div>
-        ${locked?`<div class="game-cost" style="color:var(--danger)">${lockReason}</div>
-          <button class="btn btn-outline btn-sm" style="margin-top:auto" disabled>🔒 Locked</button>`:
-          `<button class="btn btn-primary btn-sm" style="margin-top:auto" onclick="openGame('${g.id}')">▶ Launch</button>`}
+        <div class="game-cost-label">Cost: <strong>${g.cost||0} pts/min</strong></div>
+        ${locked
+          ? `<div style="font-size:12px;color:var(--danger);margin-top:auto;">${lockMsg}</div>
+             <button class="btn btn-outline btn-sm" disabled style="margin-top:4px;">🔒 Locked</button>`
+          : `<button class="btn btn-primary btn-sm" style="margin-top:auto;" onclick="openGame('${g.id}')">▶ Launch</button>`}
       </div>
     </div>`;
   }).join('');
 }
 
-function openGame(id) {
-  D=loadData();
-  const g=D.games.find(x=>x.id===id);
-  const u=D.users.find(x=>x.id===currentUser.id);
-  if(!g||!u) return;
-  activeGameId=id;
-  document.getElementById('game-title-bar').textContent=g.name;
-  document.getElementById('game-cost-bar').textContent=g.cost;
-  document.getElementById('game-pts-bar').textContent=u.points;
-  document.getElementById('game-iframe').src=g.url;
+// Tracks the current blob URL so we can revoke it on close (memory hygiene)
+let _activeBlobUrl = null;
+
+window.openGame = async function(id) {
+  // Look up from cache first; if not cached, fetch from Firestore
+  let g = _gameCache.find(x=>x.id===id);
+  if (!g) {
+    const snap = await getDoc(doc(db, 'games', id));
+    if (!snap.exists()) { toast('Game not found.'); return; }
+    g = { id, ...snap.data() };
+  }
+
+  if (!g.code || !g.code.trim()) { toast('This game has no code yet. Ask an admin to re-upload it.'); return; }
+
+  const c = parseInt(g.cost) || 0;
+  document.getElementById('gbar-title').textContent = g.name;
+  document.getElementById('gbar-cost').textContent = c;
+  document.getElementById('gbar-pts').textContent = currentUserData.points || 0;
+
+  // Build a blob URL from the stored HTML — bypasses all URL blocking
+  if (_activeBlobUrl) URL.revokeObjectURL(_activeBlobUrl);
+  const blob = new Blob([g.code], { type: 'text/html' });
+  _activeBlobUrl = URL.createObjectURL(blob);
+  document.getElementById('game-iframe').src = _activeBlobUrl;
   document.getElementById('game-frame').classList.add('open');
-  gameInterval=setInterval(()=>{
-    D=loadData();
-    const uu=D.users.find(x=>x.id===currentUser.id);
-    if(!uu){closeGame();return;}
-    if(uu.points<g.cost){closeGame();toast('Not enough points!');return;}
-    uu.points-=g.cost;
-    saveData(D);
-    currentUser=uu;
-    document.getElementById('game-pts-bar').textContent=uu.points;
-    updateNavPts();
-  },60000);
-}
 
-function closeGame() {
   clearInterval(gameInterval);
-  gameInterval=null;
-  activeGameId=null;
+  if (c > 0) {
+    gameInterval = setInterval(async () => {
+      if ((currentUserData.points||0) < c) { closeGame(); toast('Out of points!'); return; }
+      await updateDoc(doc(db, 'users', currentUserData.uid), { points: increment(-c) });
+      document.getElementById('gbar-pts').textContent = currentUserData.points || 0;
+    }, 60000);
+  }
+};
+
+window.closeGame = function() {
+  clearInterval(gameInterval);
   document.getElementById('game-frame').classList.remove('open');
-  document.getElementById('game-iframe').src='about:blank';
-  updateNavPts();
+  document.getElementById('game-iframe').src = 'about:blank';
+  if (_activeBlobUrl) { URL.revokeObjectURL(_activeBlobUrl); _activeBlobUrl = null; }
+};
+
+// ── TRADE ────────────────────────────────────────────────────────────────────
+async function renderTrade() {
+  const snap = await getDocs(collection(db, 'users'));
+  const others = snap.docs.filter(d=>d.data().approved && d.id !== currentUserData.uid);
+  const sel = document.getElementById('trade-to');
+  sel.innerHTML = others.map(d=>`<option value="${d.id}">${d.data().displayName||d.data().email}</option>`).join('');
 }
 
-// ===================== TRADE =====================
-function renderTrade() {
-  D=loadData();
-  const sel=document.getElementById('trade-to');
-  const others=D.users.filter(x=>x.approved&&x.id!==currentUser.id);
-  sel.innerHTML=others.map(u=>`<option value="${u.id}">${u.username}</option>`).join('');
-}
+window.doTrade = async function() {
+  const toUid = document.getElementById('trade-to').value;
+  const amt = parseInt(document.getElementById('trade-amt').value);
+  if (!toUid || !amt || amt < 1) { toast('Enter a valid amount.'); return; }
+  if ((currentUserData.points||0) < amt) { toast('Not enough points!'); return; }
+  await updateDoc(doc(db, 'users', currentUserData.uid), { points: increment(-amt) });
+  await updateDoc(doc(db, 'users', toUid), { points: increment(amt) });
+  document.getElementById('trade-amt').value = '';
+  toast('Points sent!');
+};
 
-function doTrade() {
-  D=loadData();
-  const toId=document.getElementById('trade-to').value;
-  const amt=parseInt(document.getElementById('trade-amt').value);
-  if(!amt||amt<1){toast('Enter a valid amount.');return;}
-  const sender=D.users.find(x=>x.id===currentUser.id);
-  const receiver=D.users.find(x=>x.id===toId);
-  if(!sender||!receiver){toast('User not found.');return;}
-  if(sender.points<amt){toast('Not enough points!');return;}
-  sender.points-=amt;
-  receiver.points=(receiver.points||0)+amt;
-  saveData(D);
-  currentUser=sender;
-  toast('Sent '+amt+' pts to '+receiver.username+'!');
-  document.getElementById('trade-amt').value='';
-  updateNavPts();
-}
+// ── ADMIN ─────────────────────────────────────────────────────────────────────
+window.switchAdminTab = function(name, btn) {
+  document.querySelectorAll('.admin-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.admin-tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('ap-'+name).classList.add('active');
+  btn.classList.add('active');
+  if (name==='shop-admin') renderAdminShop();
+  if (name==='games-admin') renderAdminGames();
+  if (name==='users') renderAdminUsers();
+  if (name==='schedule') renderScheduleEditor();
+};
 
-// ===================== ADMIN =====================
-function renderAdmin() {
+async function renderAdmin() {
   renderAdminUsers();
   renderScheduleEditor();
 }
 
-function renderAdminUsers() {
-  D=loadData();
-  // pending
-  const pending=D.pending||[];
-  const pendEl=document.getElementById('pending-users');
-  if(!pending.length){pendEl.innerHTML='<span style="color:var(--muted)">No pending registrations.</span>';}
-  else {
-    pendEl.innerHTML=pending.map(p=>`<div style="display:flex;align-items:center;gap:.5rem;padding:.3rem 0;">
-      <span style="flex:1;font-weight:500;">${p.username}</span>
-      <button class="btn btn-primary btn-sm" onclick="approveUser('${p.id}')">Approve</button>
-      <button class="btn btn-danger btn-sm" onclick="rejectUser('${p.id}')">Reject</button>
+async function renderAdminUsers() {
+  const snap = await getDocs(collection(db, 'users'));
+  const all = snap.docs.map(d=>({uid:d.id,...d.data()}));
+  const pending = all.filter(u=>!u.approved);
+  const approved = all.filter(u=>u.approved);
+
+  const pendEl = document.getElementById('pending-list');
+  pendEl.innerHTML = pending.length ? pending.map(u=>`
+    <div style="display:flex;align-items:center;gap:.5rem;padding:.3rem 0;">
+      <span style="flex:1;font-weight:500;">${u.displayName||u.email}</span>
+      <button class="btn btn-primary btn-sm" onclick="approveUser('${u.uid}')">Approve</button>
+      <button class="btn btn-danger btn-sm" onclick="rejectUser('${u.uid}')">Reject</button>
+    </div>`).join('')
+    : '<span style="color:var(--muted)">None pending.</span>';
+
+  const listEl = document.getElementById('admin-user-list');
+  listEl.innerHTML = approved.sort((a,b)=>b.points-a.points).map(u=>`
+    <div class="user-row">
+      <div style="flex:1;font-weight:500;">${u.displayName||u.email}
+        ${u.isAdmin?'<span class="tag tag-admin">admin</span>':''}
+      </div>
+      <span style="color:var(--accent);font-weight:600;min-width:70px;">${u.points||0} pts</span>
+      <input type="number" id="pa-${u.uid}" placeholder="amount" style="width:80px;padding:6px 8px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;background:var(--bg);">
+      <button class="btn btn-primary btn-sm" onclick="adminAdjust('${u.uid}',1)">+ Add</button>
+      <button class="btn btn-outline btn-sm" onclick="adminAdjust('${u.uid}',-1)">− Remove</button>
+      <button class="btn btn-danger btn-sm" onclick="adminSetPoints('${u.uid}')">Set exact</button>
     </div>`).join('');
-  }
-  // all users
-  const el=document.getElementById('admin-user-list');
-  el.innerHTML=D.users.map(u=>`<div class="user-row">
-    <div class="user-row-name">${u.username} ${u.isAdmin?'<span class="tag admin">admin</span>':''}</div>
-    <div class="user-row-pts">${u.points} pts</div>
-    <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
-      <input type="number" class="input-sm" id="pts-${u.id}" placeholder="±pts" style="width:70px;">
-      <button class="btn btn-primary btn-sm" onclick="adjustPts('${u.id}',1)">+</button>
-      <button class="btn btn-outline btn-sm" onclick="adjustPts('${u.id}',-1)">−</button>
-      ${!u.isAdmin?`<button class="btn btn-danger btn-sm" onclick="deleteUser('${u.id}')">Delete</button>`:''}
-    </div>
-  </div>`).join('');
 }
 
-function approveUser(id) {
-  D=loadData();
-  const p=D.pending.find(x=>x.id===id);
-  if(!p) return;
-  D.pending=D.pending.filter(x=>x.id!==id);
-  D.users.push({id:p.id,username:p.username,password:p.password,isAdmin:false,approved:true,points:0,upgrades:[],joinedAt:p.joinedAt});
-  saveData(D);
+window.approveUser = async function(uid) {
+  await updateDoc(doc(db, 'users', uid), { approved: true });
+  toast('User approved!');
   renderAdminUsers();
-  toast('Approved: '+p.username);
-}
-function rejectUser(id) {
-  D=loadData();
-  const p=D.pending.find(x=>x.id===id);
-  D.pending=D.pending.filter(x=>x.id!==id);
-  saveData(D);
+};
+window.rejectUser = async function(uid) {
+  if (!confirm('Reject and delete this user?')) return;
+  await deleteDoc(doc(db, 'users', uid));
+  toast('User rejected.');
   renderAdminUsers();
-  toast('Rejected: '+(p?p.username:'user'));
-}
-function adjustPts(uid,sign) {
-  D=loadData();
-  const u=D.users.find(x=>x.id===uid);
-  const inputEl=document.getElementById('pts-'+uid);
-  const amt=parseInt(inputEl.value);
-  if(!amt||amt<0){toast('Enter a valid amount.');return;}
-  u.points=Math.max(0,(u.points||0)+sign*amt);
-  saveData(D);
-  if(currentUser&&currentUser.id===uid) currentUser=u;
-  toast((sign>0?'+':'-')+amt+' pts for '+u.username);
+};
+window.adminAdjust = async function(uid, sign) {
+  const val = parseInt(document.getElementById('pa-'+uid).value);
+  if (!val || val < 0) { toast('Enter a valid amount.'); return; }
+  await updateDoc(doc(db, 'users', uid), { points: increment(sign * val) });
+  toast((sign>0?'+':'-') + val + ' pts done.');
   renderAdminUsers();
-  updateNavPts();
-}
-function deleteUser(id) {
-  if(!confirm('Delete this user?')) return;
-  D=loadData();
-  D.users=D.users.filter(x=>x.id!==id);
-  saveData(D);
+};
+window.adminSetPoints = async function(uid) {
+  const val = parseInt(document.getElementById('pa-'+uid).value);
+  if (isNaN(val) || val < 0) { toast('Enter a valid amount.'); return; }
+  await updateDoc(doc(db, 'users', uid), { points: val });
+  toast('Points set to ' + val + '.');
   renderAdminUsers();
-  toast('User deleted.');
-}
+};
 
-// ===================== SCHEDULE =====================
-const DAYS=['Mon','Tue','Wed','Thu','Fri'];
-function renderScheduleEditor() {
-  D=loadData();
-  const el=document.getElementById('schedule-editor');
-  el.innerHTML=DAYS.map(day=>{
-    const s=D.schedule[day]||{enabled:false,start:'09:00',end:'10:00'};
+// ── SCHEDULE ──────────────────────────────────────────────────────────────────
+const DAYS = ['Mon','Tue','Wed','Thu','Fri'];
+async function renderScheduleEditor() {
+  const snap = await getDoc(doc(db, 'config', 'schedule'));
+  const sched = snap.exists() ? snap.data() : {};
+  const el = document.getElementById('sched-editor');
+  el.innerHTML = DAYS.map(day => {
+    const s = sched[day] || { enabled: false, start: '09:00', end: '10:00' };
     return `<div class="schedule-row">
       <div class="schedule-day">${day}</div>
-      <input type="checkbox" id="sched-en-${day}" ${s.enabled?'checked':''} onchange="schedToggle('${day}')">
-      <label for="sched-en-${day}" style="font-size:13px;color:var(--muted)">Active</label>
-      <input type="time" class="input-sm" id="sched-s-${day}" value="${s.start}" style="width:100px;">
-      <span style="color:var(--muted);font-size:13px;">to</span>
-      <input type="time" class="input-sm" id="sched-e-${day}" value="${s.end}" style="width:100px;">
+      <input type="checkbox" id="sen-${day}" ${s.enabled?'checked':''}>
+      <label for="sen-${day}" style="font-size:13px;color:var(--muted);">Active</label>
+      <input type="time" id="ss-${day}" value="${s.start}" style="width:100px;padding:6px 8px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;background:var(--bg);">
+      <span style="font-size:13px;color:var(--muted);">to</span>
+      <input type="time" id="se-${day}" value="${s.end}" style="width:100px;padding:6px 8px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;background:var(--bg);">
     </div>`;
   }).join('');
 }
-function schedToggle(){}
-function saveSchedule() {
-  D=loadData();
-  DAYS.forEach(day=>{
-    D.schedule[day]={
-      enabled:document.getElementById('sched-en-'+day).checked,
-      start:document.getElementById('sched-s-'+day).value,
-      end:document.getElementById('sched-e-'+day).value
+
+window.saveSchedule = async function() {
+  const data = {};
+  DAYS.forEach(day => {
+    data[day] = {
+      enabled: document.getElementById('sen-'+day).checked,
+      start: document.getElementById('ss-'+day).value,
+      end: document.getElementById('se-'+day).value,
     };
   });
-  saveData(D);
+  await setDoc(doc(db, 'config', 'schedule'), data);
   toast('Schedule saved!');
+};
+
+// ── ADMIN SHOP ────────────────────────────────────────────────────────────────
+window.siTypeChange = function() {
+  const t = document.getElementById('si-type').value;
+  document.getElementById('si-game-wrap').style.display = t === 'game_access' ? 'block' : 'none';
+  if (t === 'game_access') populateGameSelect();
+};
+async function populateGameSelect() {
+  const snap = await getDocs(collection(db, 'games'));
+  const sel = document.getElementById('si-game-sel');
+  sel.innerHTML = snap.docs.map(d=>`<option value="${d.id}">${d.data().name}</option>`).join('');
+}
+window.addShopItem = async function() {
+  const name = document.getElementById('si-name').value.trim();
+  const desc = document.getElementById('si-desc').value.trim();
+  const cost = parseInt(document.getElementById('si-cost').value);
+  const type = document.getElementById('si-type').value;
+  if (!name || !desc || !cost) { toast('Fill all fields.'); return; }
+  const item = { name, desc, cost, type };
+  if (type === 'game_access') item.gameId = document.getElementById('si-game-sel').value;
+  await setDoc(doc(collection(db, 'shopItems')), item);
+  ['si-name','si-desc','si-cost'].forEach(id => document.getElementById(id).value = '');
+  toast('Item added!');
+  renderAdminShop();
+};
+async function renderAdminShop() {
+  const snap = await getDocs(collection(db, 'shopItems'));
+  const el = document.getElementById('admin-shop-list');
+  if (!snap.docs.length) { el.innerHTML='<div style="padding:1rem;color:var(--muted);font-size:14px;">No items yet.</div>'; return; }
+  el.innerHTML = snap.docs.map(d=>{const i=d.data();return`<div class="user-row">
+    <div style="flex:1;"><div style="font-weight:500;">${i.name}</div>
+    <div style="font-size:12px;color:var(--muted);">${i.desc} • ${i.cost} pts • ${i.type}</div></div>
+    <button class="btn btn-danger btn-sm" onclick="deleteShopItem('${d.id}')">Delete</button>
+  </div>`;}).join('');
+}
+window.deleteShopItem = async function(id) {
+  await deleteDoc(doc(db, 'shopItems', id));
+  toast('Item removed.'); renderAdminShop();
+};
+
+// ── BUNDLER ───────────────────────────────────────────────────────────────────
+let _bundlerFiles = {};
+
+window.dzOver = function(e) {
+  e.preventDefault();
+  document.getElementById('drop-zone').style.borderColor = 'var(--accent2)';
+  document.getElementById('drop-zone').style.background = 'var(--info-bg)';
+};
+window.dzLeave = function() {
+  document.getElementById('drop-zone').style.borderColor = 'var(--border)';
+  document.getElementById('drop-zone').style.background = 'var(--surface2)';
+};
+window.dzDrop = function(e) { e.preventDefault(); dzLeave(); loadBundlerFiles(e.dataTransfer.files); };
+window.dzPick = function(files) { loadBundlerFiles(files); };
+
+function loadBundlerFiles(fileList) {
+  const tasks = Array.from(fileList).map(file => new Promise(resolve => {
+    const name = file.name;
+    const isBinary = /\.(png|jpg|jpeg|gif|webp|ico|bmp|svg|woff|woff2|ttf|otf|eot|mp3|ogg|wav|mp4)$/i.test(name);
+    const r = new FileReader();
+    if (isBinary) {
+      r.onload = () => { _bundlerFiles[name] = { kind: 'binary', data: r.result }; resolve(); };
+      r.readAsDataURL(file);
+    } else {
+      r.onload = () => { _bundlerFiles[name] = { kind: 'text', data: r.result }; resolve(); };
+      r.readAsText(file);
+    }
+  }));
+  Promise.all(tasks).then(updateBundlerUI);
 }
 
-// ===================== SHOP ADMIN =====================
-document.getElementById('si-type').addEventListener('change',function(){
-  document.getElementById('si-game-wrap').style.display=this.value==='game_access'?'block':'none';
-  if(this.value==='game_access') {
-    D=loadData();
-    const sel=document.getElementById('si-game-id');
-    sel.innerHTML=D.games.map(g=>`<option value="${g.id}">${g.name}</option>`).join('');
+function updateBundlerUI() {
+  const names = Object.keys(_bundlerFiles);
+  const listEl = document.getElementById('bundler-files');
+  const wrapEl = document.getElementById('bundler-file-list');
+  const btn = document.getElementById('bundle-btn');
+  if (!names.length) { wrapEl.style.display='none'; btn.disabled=true; return; }
+  wrapEl.style.display = 'block';
+  btn.disabled = false;
+  listEl.innerHTML = names.map(n => {
+    const f = _bundlerFiles[n];
+    const kb = f.kind==='binary' ? Math.round(f.data.length*0.75/1024) : Math.round(f.data.length/1024);
+    const icon = /\.html?$/i.test(n)?'📄':/\.(js|mjs)$/i.test(n)?'📜':/\.css$/i.test(n)?'🎨':/\.(png|jpg|jpeg|gif|webp|svg|ico)$/i.test(n)?'🖼️':/\.(woff|woff2|ttf|otf)$/i.test(n)?'🔤':/\.(mp3|ogg|wav)$/i.test(n)?'🔊':'📎';
+    return `<span style="margin-right:1.2rem;">${icon} ${n} <strong style="color:var(--accent)">${kb} KB</strong></span>`;
+  }).join('');
+}
+
+window.clearBundler = function() {
+  _bundlerFiles = {};
+  document.getElementById('bundler-file-list').style.display = 'none';
+  document.getElementById('bundle-btn').disabled = true;
+  document.getElementById('bundle-status').textContent = '';
+  document.getElementById('file-picker').value = '';
+};
+
+window.runBundler = function() {
+  const statusEl = document.getElementById('bundle-status');
+  statusEl.textContent = 'Bundling…';
+  const htmlName = Object.keys(_bundlerFiles).find(n => /\.html?$/i.test(n));
+  if (!htmlName) { statusEl.textContent = 'No HTML file found — include an index.html.'; return; }
+  let html = _bundlerFiles[htmlName].data;
+
+  // Helper: look up a file by its bare filename or relative path
+  const findFile = (ref) => {
+    const bare = ref.split('/').pop().split('?')[0];
+    return _bundlerFiles[bare] || _bundlerFiles[ref] || null;
+  };
+
+  // 1. Inline <script src="...">
+  html = html.replace(/<script([^>]*?)\ssrc=["']([^"']+)["']([^>]*)>\s*<\/script>/gi, (m, pre, src, post) => {
+    const f = findFile(src);
+    if (!f || f.kind !== 'text') return m;
+    return '<script' + pre + post + '>\n' + f.data + '\n</script>';
+  });
+
+  // 2. Inline <link rel="stylesheet" href="...">
+  html = html.replace(/<link([^>]*?)\shref=["']([^"']+)["']([^>]*?)\/?>/gi, (m, pre, href, post) => {
+    if (!/stylesheet/i.test(pre + post + m)) return m;
+    const f = findFile(href);
+    if (!f || f.kind !== 'text') return m;
+    return '<style>\n' + f.data + '\n</style>';
+  });
+
+  // 3. Replace asset references (img src, audio src, CSS url(), etc.) with base64 data URLs
+  const replaceRef = (ref) => { const f = findFile(ref); return (f && f.kind==='binary') ? f.data : null; };
+  html = html.replace(/(<img[^>]+src=["'])([^"'#?]+)(["'])/gi, (m,a,s,b)=>{ const d=replaceRef(s); return d?a+d+b:m; });
+  html = html.replace(/(<(?:source|audio|video|track)[^>]+src=["'])([^"'#?]+)(["'])/gi, (m,a,s,b)=>{ const d=replaceRef(s); return d?a+d+b:m; });
+  html = html.replace(/url\(["']?([^"')#?]+)["']?\)/gi, (m,ref)=>{ const d=replaceRef(ref); return d?'url('+d+')':m; });
+
+  document.getElementById('g-code').value = html;
+  updateCodeSize();
+  const kb = Math.round(html.length / 1024);
+  statusEl.textContent = '✅ Done — ' + kb + ' KB bundled. Fill in the form below and click "Add to arcade".';
+};
+
+window.updateCodeSize = function() {
+  const len = (document.getElementById('g-code').value || '').length;
+  const el = document.getElementById('code-size');
+  if (el) el.textContent = len ? Math.round(len/1024) + ' KB' : '';
+};
+
+// ── ADMIN GAMES ───────────────────────────────────────────────────────────────
+window.addGame = async function() {
+  const name = document.getElementById('g-name').value.trim();
+  const code = document.getElementById('g-code').value.trim();
+  const icon = document.getElementById('g-icon').value.trim() || '🎮';
+  const cost = parseInt(document.getElementById('g-cost').value) || 0;
+  const gated = document.getElementById('g-gated').value === '1';
+  if (!name) { toast('Enter a name.'); return; }
+  if (!code) { toast('Paste the game HTML code.'); return; }
+  if (code.length > 900000) { toast('Code too large (max ~900 KB). Try a smaller game.'); return; }
+
+  const btn = document.querySelector('#ap-games-admin .btn-primary');
+  btn.disabled = true; btn.textContent = 'Saving…';
+  try {
+    await setDoc(doc(collection(db, 'games')), { name, code, icon, cost, gated });
+    document.getElementById('g-name').value = '';
+    document.getElementById('g-code').value = '';
+    document.getElementById('g-icon').value = '';
+    document.getElementById('g-cost').value = '';
+    toast('Game added! (' + Math.round(code.length/1024) + ' KB)');
+    renderAdminGames();
+  } catch(e) {
+    toast('Error saving: ' + e.message);
   }
-});
+  btn.disabled = false; btn.textContent = 'Add tool';
+};
 
-function renderAdminShop() {
-  D=loadData();
-  const el=document.getElementById('admin-shop-list');
-  if(!D.shopItems||!D.shopItems.length){el.innerHTML='<div style="padding:1.2rem;color:var(--muted);font-size:14px;">No items yet.</div>';return;}
-  el.innerHTML=D.shopItems.map(item=>`<div class="user-row">
-    <div style="flex:1;">
-      <div style="font-weight:500;">${item.name}</div>
-      <div style="font-size:12px;color:var(--muted);">${item.desc} • ${item.cost} pts • ${item.type}</div>
-    </div>
-    <button class="btn btn-danger btn-sm" onclick="deleteShopItem('${item.id}')">Delete</button>
-  </div>`).join('');
-}
-
-function addShopItem() {
-  const name=document.getElementById('si-name').value.trim();
-  const desc=document.getElementById('si-desc').value.trim();
-  const cost=parseInt(document.getElementById('si-cost').value);
-  const type=document.getElementById('si-type').value;
-  if(!name||!desc||!cost){toast('Fill all fields.');return;}
-  D=loadData();
-  const item={id:'si'+Date.now(),name,desc,cost,type};
-  if(type==='game_access') item.gameId=document.getElementById('si-game-id').value;
-  if(!D.shopItems) D.shopItems=[];
-  D.shopItems.push(item);
-  saveData(D);
-  document.getElementById('si-name').value='';
-  document.getElementById('si-desc').value='';
-  document.getElementById('si-cost').value='';
-  renderAdminShop();
-  toast('Shop item added!');
-}
-function deleteShopItem(id) {
-  D=loadData();
-  D.shopItems=D.shopItems.filter(x=>x.id!==id);
-  saveData(D);
-  renderAdminShop();
-  toast('Item removed.');
+async function renderAdminGames() {
+  const snap = await getDocs(collection(db, 'games'));
+  const el = document.getElementById('admin-games-list');
+  if (!snap.docs.length) { el.innerHTML='<div style="padding:1rem;color:var(--muted);font-size:14px;">No tools yet.</div>'; return; }
+  el.innerHTML = snap.docs.map(d=>{
+    const g=d.data();
+    const kb = g.code ? Math.round(g.code.length/1024) : 0;
+    return `<div class="user-row">
+      <div style="font-size:1.5rem;width:36px;text-align:center;">${g.icon||'🎮'}</div>
+      <div style="flex:1;">
+        <div style="font-weight:500;">${g.name}</div>
+        <div style="font-size:12px;color:var(--muted);">${g.cost} pts/min${g.gated?' • 🔒 gated':''} • ${kb} KB of code</div>
+      </div>
+      <button class="btn btn-danger btn-sm" onclick="deleteGame('${d.id}')">Delete</button>
+    </div>`;
+  }).join('');
 }
 
-// ===================== GAMES ADMIN =====================
-function renderAdminGames() {
-  D=loadData();
-  const el=document.getElementById('admin-games-list');
-  if(!D.games||!D.games.length){el.innerHTML='<div style="padding:1.2rem;color:var(--muted);font-size:14px;">No tools yet.</div>';return;}
-  el.innerHTML=D.games.map(g=>`<div class="user-row">
-    <div class="game-thumb" style="height:40px;width:40px;font-size:1.5rem;border-radius:6px;background:var(--surface2);display:flex;align-items:center;justify-content:center;">${g.icon||'🎮'}</div>
-    <div style="flex:1;">
-      <div style="font-weight:500;">${g.name}</div>
-      <div style="font-size:12px;color:var(--muted);">${g.cost} pts/min ${g.gated?'• 🔒 gated':''}</div>
-    </div>
-    <button class="btn btn-danger btn-sm" onclick="deleteGame('${g.id}')">Delete</button>
-  </div>`).join('');
-}
+window.deleteGame = async function(id) {
+  if (!confirm('Delete this game?')) return;
+  await deleteDoc(doc(db, 'games', id));
+  toast('Game removed.'); renderAdminGames();
+};
 
-function addGame() {
-  const name=document.getElementById('g-name').value.trim();
-  const url=document.getElementById('g-url').value.trim();
-  const icon=document.getElementById('g-icon').value.trim()||'🎮';
-  const cost=parseInt(document.getElementById('g-cost').value)||1;
-  const gated=document.getElementById('g-gated').value==='1';
-  if(!name||!url){toast('Fill name and URL.');return;}
-  D=loadData();
-  if(!D.games) D.games=[];
-  D.games.push({id:'g'+Date.now(),name,url,icon,cost,gated});
-  saveData(D);
-  document.getElementById('g-name').value='';
-  document.getElementById('g-url').value='';
-  document.getElementById('g-icon').value='';
-  document.getElementById('g-cost').value='';
-  renderAdminGames();
-  toast('Practice tool added!');
-}
-function deleteGame(id) {
-  D=loadData();
-  D.games=D.games.filter(x=>x.id!==id);
-  saveData(D);
-  renderAdminGames();
-  toast('Tool removed.');
-}
-
-// ===================== TOAST =====================
-let toastTimer;
-function toast(msg) {
-  const el=document.getElementById('toast');
-  el.textContent=msg;
-  el.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>el.classList.remove('show'),2800);
-}
 </script>
 </body>
 </html>
