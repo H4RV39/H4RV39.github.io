@@ -138,7 +138,12 @@
 <!-- LOADING OVERLAY -->
 <div id="loading-overlay">
   <div class="spinner" style="width:30px;height:30px;border-width:3px;"></div>
-  <p>Connecting to MathsPoint…</p>
+  <p id="loading-msg" style="color:var(--muted);font-size:14px;">Connecting to MathsPoint…</p>
+  <div id="loading-timeout-msg" style="display:none;text-align:center;max-width:360px;padding:0 1rem;">
+    <p style="color:var(--danger);font-size:13px;margin-bottom:.8rem;">Taking too long — Firebase may not be configured correctly, or there is a network issue.</p>
+    <button class="btn btn-primary btn-sm" onclick="showSetup()" style="margin-right:.4rem;">&#9881; Configure Firebase</button>
+    <button class="btn btn-outline btn-sm" onclick="location.reload()">&#8635; Retry</button>
+  </div>
 </div>
 
 <!-- FIREBASE SETUP SCREEN (shown if not configured) -->
@@ -478,6 +483,7 @@ const cfg = getConfig();
 if (!cfg) {
   document.getElementById('loading-overlay').style.display = 'none';
   document.getElementById('setup-screen').style.display = 'flex';
+  document.getElementById('cfg-err').textContent = 'No Firebase config found. Fill in the fields below.';
 } else {
   try {
     app = initializeApp(cfg);
@@ -487,7 +493,7 @@ if (!cfg) {
   } catch(e) {
     document.getElementById('loading-overlay').style.display = 'none';
     document.getElementById('setup-screen').style.display = 'flex';
-    document.getElementById('cfg-err').textContent = 'Firebase init failed: ' + e.message;
+    document.getElementById('cfg-err').textContent = 'Firebase init failed: ' + e.message + '. Double-check your config values.';
   }
 }
 
@@ -512,24 +518,42 @@ function toast(msg) {
 window.toast = toast;
 
 // ── BOOT ─────────────────────────────────────────────────────────────────────
+function hideLoader() {
+  document.getElementById('loading-overlay').style.display = 'none';
+}
+
 function bootApp() {
+  // Show timeout warning after 8 seconds if Firebase never responds
+  const timeoutId = setTimeout(() => {
+    document.getElementById('loading-timeout-msg').style.display = 'block';
+    document.getElementById('loading-msg').textContent = 'Still trying to connect...';
+  }, 8000);
+
   onAuthStateChanged(auth, async (user) => {
-    document.getElementById('loading-overlay').style.display = 'none';
-    if (!user) { showView('landing'); return; }
-    // Load user profile from Firestore
-    const uRef = doc(db, 'users', user.uid);
-    const uSnap = await getDoc(uRef);
-    if (!uSnap.exists()) { showView('landing'); await signOut(auth); return; }
-    currentUserData = { uid: user.uid, ...uSnap.data() };
-    if (!currentUserData.approved) { showView('awaiting'); return; }
-    // All good — show app
-    showView('app');
-    document.getElementById('nav-user').textContent = currentUserData.displayName || currentUserData.email;
-    document.getElementById('nb-admin').style.display = currentUserData.isAdmin ? '' : 'none';
-    refreshHubUI();
-    startPointClock();
-    listenUsers();
-    showTab('hub');
+    clearTimeout(timeoutId);
+    document.getElementById('loading-timeout-msg').style.display = 'none';
+    try {
+      if (!user) { hideLoader(); showView('landing'); return; }
+      document.getElementById('loading-msg').textContent = 'Loading your profile...';
+      const uRef = doc(db, 'users', user.uid);
+      const uSnap = await getDoc(uRef);
+      if (!uSnap.exists()) { hideLoader(); showView('landing'); await signOut(auth); return; }
+      currentUserData = { uid: user.uid, ...uSnap.data() };
+      hideLoader();
+      if (!currentUserData.approved) { showView('awaiting'); return; }
+      showView('app');
+      document.getElementById('nav-user').textContent = currentUserData.displayName || currentUserData.email;
+      document.getElementById('nb-admin').style.display = currentUserData.isAdmin ? '' : 'none';
+      refreshHubUI();
+      startPointClock();
+      listenUsers();
+      showTab('hub');
+    } catch(e) {
+      clearTimeout(timeoutId);
+      hideLoader();
+      document.getElementById('setup-screen').style.display = 'flex';
+      document.getElementById('cfg-err').textContent = 'Connection error: ' + e.message + '. Check your Firebase config and Firestore rules.';
+    }
   });
 }
 
