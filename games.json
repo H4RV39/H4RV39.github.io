@@ -3,7 +3,7 @@
     "id": "example-game",
     "title": "Example Game",
     "description": "A placeholder game — replace with your own!",
-    "folder": "main/game1",
+    "folder": "root/game1",
     "entry": "index.html",
     "thumbnail": "",
     "tags": ["demo"]
