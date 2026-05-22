@@ -437,11 +437,14 @@ import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, getDocs, onSn
 // ── CONFIG ──────────────────────────────────────────────────────────────────
 // OPTION A: Hardcode your Firebase config here (recommended for shared hosting)
 // Just fill in your values and the setup screen won't appear.
-const HARDCODED_CONFIG = {
+const firebaseConfig = {
   apiKey: "AIzaSyD6i_7qrUFaDBJ0Fvqgv5W3EYE32awqt-U",
   authDomain: "mathspoints-6ac60.firebaseapp.com",
   projectId: "mathspoints-6ac60",
+  storageBucket: "mathspoints-6ac60.firebasestorage.app",
+  messagingSenderId: "757251553249",
   appId: "1:757251553249:web:3c3260e9b3abef5a1d84a0",
+  measurementId: "G-1YZ7G7TYRC"
 };
 // OPTION B: If left blank above, users enter config via the setup screen (saved in localStorage).
 
