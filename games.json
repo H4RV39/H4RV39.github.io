@@ -26,4 +26,13 @@
     "thumbnail": "",
     "tags": ["arcade","duo"]
   }
+  {
+    "id": "flappybird",
+    "title": "Flappy Bird",
+    "description": "ignore the small frame and scuffed gravity",
+    "folder": "games/flappybird",
+    "entry": "index.html",
+    "thumbnail": "",
+    "tags": ["arcade","classic"]
+  }
 ]
