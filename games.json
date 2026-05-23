@@ -34,5 +34,14 @@
     "entry": "index.html",
     "thumbnail": "",
     "tags": ["arcade","classic"]
+  },
+  {
+    "id": "fnaf1",
+    "title": "Five nights at Freddy's",
+    "description": "crazy luck required for this to actually work",
+    "folder": "games/fnaf1",
+    "entry": "index.html",
+    "thumbnail": "",
+    "tags": ["puzzle","horror"]
   }
 ]
