@@ -17,4 +17,13 @@
     "thumbnail": "",
     "tags": ["puzzle","daily"]
   }
+  {
+    "id": "pingpong",
+    "title": "Ping Pong",
+    "description": "more like air hockey but who cares",
+    "folder": "games/pingpong",
+    "entry": "index.html",
+    "thumbnail": "",
+    "tags": ["arcade","duo"]
+  }
 ]
