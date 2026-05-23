@@ -7,7 +7,7 @@
     "entry": "index.html",
     "thumbnail": "",
     "tags": ["arcade","classic"]
-  }
+  },
   {
     "id": "wordle",
     "title": "Wordle",
@@ -16,7 +16,7 @@
     "entry": "index.html",
     "thumbnail": "",
     "tags": ["puzzle","daily"]
-  }
+  },
   {
     "id": "pingpong",
     "title": "Ping Pong",
@@ -25,7 +25,7 @@
     "entry": "index.html",
     "thumbnail": "",
     "tags": ["arcade","duo"]
-  }
+  },
   {
     "id": "flappybird",
     "title": "Flappy Bird",
