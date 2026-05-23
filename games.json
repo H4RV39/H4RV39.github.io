@@ -8,4 +8,13 @@
     "thumbnail": "",
     "tags": ["arcade","classic"]
   }
+  {
+    "id": "wordle",
+    "title": "Wordle",
+    "description": "yet another found on github",
+    "folder": "games/wordle",
+    "entry": "index.html",
+    "thumbnail": "",
+    "tags": ["puzzle","daily"]
+  }
 ]
