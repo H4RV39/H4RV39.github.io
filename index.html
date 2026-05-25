@@ -332,7 +332,7 @@
 <!-- Loading screen -->
 <div id="loading">
   <div class="spinner"></div>
-  <p>launching game...</p>
+  <p>launching resource...</p>
 </div>
 
 <!-- Hub -->
@@ -358,8 +358,8 @@
     <div class="section-label" id="games-label">// all textbooks</div>
     <div id="game-grid"></div>
     <div id="empty">
-      <p style="font-size:2rem">👾</p>
-      <p>No games found. Try a different search.</p>
+      <p style="font-size:2rem">📖</p>
+      <p>No textbooks found. Try a different search.</p>
     </div>
   </main>
 </div>
@@ -383,7 +383,7 @@
   let allGames = [];
 
   // Emoji fallback thumbnails by tag or index
-  const thumbEmoji = ['🎮','🕹️','🎯','🧩','⚔️','🚀','🏆','🐉','💣','🎲','🏎️','🌀'];
+  const thumbEmoji = ['🎒','✏️','🎯','🧩','📝','🧐','🏫','📇','🖊️''];
 
   async function loadGames() {
     try {
@@ -393,7 +393,7 @@
     } catch (e) {
       document.getElementById('empty').style.display = 'block';
       document.getElementById('empty').querySelector('p:last-child').textContent =
-        'Could not load games.json. Make sure it exists in your repo root.';
+        'Could not load textbooks.json. Make sure it exists in your repo root.';
     }
   }
 
