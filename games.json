@@ -3,7 +3,7 @@
     "id": "tetris",
     "title": "Tetris",
     "description": "some tetris game i found on github",
-    "folder": "games/tetris",
+    "folder": "textbooks/tetris",
     "entry": "index.html",
     "thumbnail": "",
     "tags": ["arcade","classic"]
@@ -12,7 +12,7 @@
     "id": "wordle",
     "title": "Wordle",
     "description": "yet another found on github",
-    "folder": "games/wordle",
+    "folder": "textbooks/wordle",
     "entry": "index.html",
     "thumbnail": "",
     "tags": ["puzzle","daily"]
@@ -21,7 +21,7 @@
     "id": "pingpong",
     "title": "Ping Pong",
     "description": "more like air hockey but who cares",
-    "folder": "games/pingpong",
+    "folder": "textbooks/pingpong",
     "entry": "index.html",
     "thumbnail": "",
     "tags": ["arcade","duo"]
@@ -30,7 +30,7 @@
     "id": "flappybird",
     "title": "Flappy Bird",
     "description": "ignore the small frame and scuffed gravity",
-    "folder": "games/flappybird",
+    "folder": "textbooks/flappybird",
     "entry": "index.html",
     "thumbnail": "",
     "tags": ["arcade","classic"]
@@ -39,7 +39,7 @@
     "id": "fnaf1",
     "title": "Five nights at Freddy's",
     "description": "crazy luck required for this to actually work",
-    "folder": "games/fnaf1",
+    "folder": "textbooks/fnaf1",
     "entry": "index.html",
     "thumbnail": "",
     "tags": ["puzzle","horror"]
